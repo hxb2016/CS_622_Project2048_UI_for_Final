@@ -13,7 +13,7 @@ import java.util.TimerTask;
  * Course: CS-622
  */
 public class UpdateTimerPane {
-    private static int second = 0;
+    public static int second = 0;
     private static Timer timer = new Timer();
     /**
      * purpose of this method is to launch the timer

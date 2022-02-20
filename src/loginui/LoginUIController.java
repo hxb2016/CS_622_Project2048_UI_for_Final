@@ -16,7 +16,7 @@ import java.util.Arrays;
 
 /**
  * purpose of this class is to set action listener of buttons in LoginUI
- *
+ * <p>
  * Author: Xiaobing Hou
  * Date: 02/12/2022
  * Course: CS-622
@@ -56,7 +56,7 @@ public class LoginUIController {
 
                         //Update record panel
                         if (((RegisteredUser) App.currentUser).lastBlocksArrayData != null) {
-                            App.mainUI.updateLastBestRecord();
+                            App.mainUI.updateLastBestRecord(false);
                         }
 
                         //Update username panel
@@ -141,7 +141,7 @@ public class LoginUIController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String username = loginUI.userNameBox.getText().trim().equals("") ? " " : loginUI.userNameBox.getText();
-                App.currentUser = new UnRegisteredUser(username);
+                App.currentUser = new UnRegisteredUser();
 
                 CreateBlockArrayData.creatBlockArrayData(App.interfaceSize, App.currentUser);
                 MainUIBlocksArrayPaneUpdate.updateUI(App.mainUI.blocksArray, App.currentUser.currentBlocksArrayData, App.mainUI.blocksArrayPane);
@@ -210,7 +210,7 @@ public class LoginUIController {
                 try {
                     SaveUsersData.saveUsersData(App.usersData, App.userDataPath);
                     OptionPane.setJOptionPaneMessage(App.mainUI, "Successfully Registered and Save!", "Message", null);
-                    App.mainUI.updateLastBestRecord();
+                    App.mainUI.updateLastBestRecord(false);
                 } catch (Exception e) {
                     System.out.println("Error happened when save data.");
                     e.printStackTrace();

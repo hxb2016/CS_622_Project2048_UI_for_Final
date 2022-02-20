@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
  */
 public class UsersTable extends JTable {
     private final String[] title = new String[]{"Username", "Best record"};
+    public String[] champion=new String[2];
 
     /**
      * purpose of this method is to set the data into the table and style of the table
@@ -104,6 +105,8 @@ public class UsersTable extends JTable {
             data[index][1] = ((RegisteredUser) usersData.get(username)).bestTakeTime == 0 ? "null" : ((RegisteredUser) usersData.get(username)).bestTakeTime + " s";
             index++;
         }
+        champion[0]=data[0][0];
+        champion[1]=data[0][1];
         return data;
     }
 

@@ -12,7 +12,7 @@ import users.User;
  * Course: CS-622
  */
 public class UnRegisteredUserTest {
-    static User user = new UnRegisteredUser("Xiaobing");
+    static User user = new UnRegisteredUser();
 
     @Test
     public void getInformationTest() {

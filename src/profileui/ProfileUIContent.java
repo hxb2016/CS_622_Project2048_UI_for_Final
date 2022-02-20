@@ -10,24 +10,31 @@ import java.awt.*;
 
 /**
  * purpose of this class is to create a component panel for profile interface
- *
+ * <p>
  * Author: Xiaobing Hou
  * Date: 02/12/2022
  * Course: CS-622
  */
 public class ProfileUIContent extends JPanel {
 
-    public ProfilePhoto profilePhoto = new ProfilePhoto(App.currentUser);
-    public JTextField username = new ProfileTextField(App.currentUser.username);
-    public JTextField gender = new ProfileTextField(App.currentUser.gender);
-    public JTextField age = new ProfileTextField(App.currentUser.age + "");
-    public JTextField introduction = new ProfileTextField(App.currentUser.introduce);
+    public ProfilePhoto profilePhoto;
+    public JTextField username;
+    public JTextField gender;
+    public JTextField age;
+    public JTextField introduction;
     public JPasswordField password = null;
     public JButton editButton = null;
+    public JButton delButton = null;
 
-    private static ProfileUIContent profileUIContent=null;
+    public static ProfileUIContent profileUIContent = null;
 
     private ProfileUIContent(User user) {
+        profilePhoto = new ProfilePhoto(user);
+        username = new ProfileTextField(user.username);
+        gender = new ProfileTextField(user.gender);
+        age = new ProfileTextField(user.age + "");
+        introduction = new ProfileTextField(user.introduce);
+
         JPanel topPanel = new JPanel();
         profilePhoto.username.setText(user.username);
         topPanel.add(profilePhoto);
@@ -69,7 +76,10 @@ public class ProfileUIContent extends JPanel {
         buttonPanel.setLayout(new GridLayout(1, 2));
         editButton = new LoginUIButton("Edit");
         editButton.setFont(new Font("Times New Roman", Font.BOLD, 18));
+        delButton = new LoginUIButton("Del Account");
+        delButton.setFont(new Font("Times New Roman", Font.BOLD, 18));
         buttonPanel.add(editButton);
+        buttonPanel.add(delButton);
 
         bottomPanel.add(usernamePane);
         bottomPanel.add(passwordPane);
@@ -86,10 +96,21 @@ public class ProfileUIContent extends JPanel {
      * purpose of this method is to make sure that there is always one component
      */
     public static void setProfileUIContent(User user) {
-        if (profileUIContent == null) {
+        if (App.ifDeleteAccount) {
+
+            App.profileUI.remove(profileUIContent);
             profileUIContent = new ProfileUIContent(user);
-            App.profileUI.add(profileUIContent,BorderLayout.CENTER);
+            App.profileUI.add(profileUIContent, BorderLayout.CENTER);
             ProfileUIController.setController(profileUIContent);
+            profileUIContent.updateUI();
+            App.ifDeleteAccount = false;
+
+        } else {
+            if (profileUIContent == null) {
+                profileUIContent = new ProfileUIContent(user);
+                App.profileUI.add(profileUIContent, BorderLayout.CENTER);
+                ProfileUIController.setController(profileUIContent);
+            }
         }
     }
 

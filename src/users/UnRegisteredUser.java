@@ -9,8 +9,8 @@ package users;
  */
 public class UnRegisteredUser extends User {
 
-    public UnRegisteredUser(String username) {
-        this.username = username;
+    public UnRegisteredUser() {
+
     }
 
     @Override

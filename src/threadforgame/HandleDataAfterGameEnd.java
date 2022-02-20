@@ -43,7 +43,7 @@ public class HandleDataAfterGameEnd extends Thread {
                 App.usersData.put(user.username, user);
                 try {
                     SaveUsersData.saveUsersData(App.usersData, App.userDataPath);
-                    App.mainUI.updateLastBestRecord();
+                    App.mainUI.updateLastBestRecord(false);
                     App.mainUI.usersScrollPane.updateUsersTable();
                 } catch (Exception e) {
                     e.printStackTrace();
