@@ -24,10 +24,11 @@ public class Operate {
      */
     public static void operation(int code, User currentUser) {
 
-        if (!App.ifEnd) {
+        if (!App.ifEnd && !App.ifPauseTimer) {
             if (code == 37 || code == 38 ||code == 39 || code == 40){
                 if (!ifStartOperate) {
                     UpdateTimerPane.startTimer();
+                    App.mainUI.pause.setEnabled(true);
                     ifStartOperate = true;
                 }
 

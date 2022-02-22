@@ -23,11 +23,22 @@ public class UpdateTimerPane {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                App.mainUI.timerPane.setSecond(second + " s");
+                if(App.mainUI.timerPane.timerHideOrShow) {
+                    App.mainUI.timerPane.setSecond(second + " s");
+                }
                 second++;
             }
         }, 0, 1000);
     }
+
+    /**
+     * purpose of this method is to pause the timer
+     */
+    public static void pauseTimer() {
+        timer.cancel();
+        second--;
+    }
+
     /**
      * purpose of this method is to end the timer
      */

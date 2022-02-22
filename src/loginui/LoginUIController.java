@@ -3,6 +3,7 @@ package loginui;
 import game2048_test.App;
 import io.SaveUsersData;
 import profileui.ImageIconForPhoto;
+import settingui.SettingController;
 import tool.OptionPane;
 import tool.CreateBlockArrayData;
 import mainui.MainUIBlocksArrayPaneUpdate;
@@ -35,18 +36,31 @@ public class LoginUIController {
                         // If the game has been ended
                         if (!App.ifEnd) {
                             App.currentUser = App.usersData.get(username);
-                            CreateBlockArrayData.creatBlockArrayData(App.interfaceSize, App.currentUser);
-                            MainUIBlocksArrayPaneUpdate.updateUI(App.mainUI.blocksArray, App.currentUser.currentBlocksArrayData, App.mainUI.blocksArrayPane);
+
+                            SettingController.updateMainInterface();
+                            SettingController.updateBackground(App.backgroundColors[App.currentUser.backgroundColor]);
+                            SettingController.updateMainTop(App.mainUI, App.currentUser);
+                            if (App.currentUser.gameSize != App.interfaceSize) {
+                                App.ifStandardMode = false;
+                            }
                         } else {
                             RegisteredUser newCurrentUser = (RegisteredUser) (App.usersData.get(username));
                             newCurrentUser.dataExchange(App.currentUser);
                             newCurrentUser.setData();//set the data to prepare for saving
                             App.usersData.put(newCurrentUser.username, newCurrentUser);
                             App.currentUser = newCurrentUser;
+
                             try {
                                 SaveUsersData.saveUsersData(App.usersData, App.userDataPath);
                                 OptionPane.setJOptionPaneMessage(App.mainUI, "Successfully Login and Save!", "Message", null);
+                                App.mainUI.save.setEnabled(false);
 
+                                if (App.currentUser.gameSize != App.interfaceSize) {
+                                    SettingController.updateMainInterface();
+                                    App.ifStandardMode = false;
+                                }
+                                SettingController.updateMainTop(App.mainUI, App.currentUser);
+                                SettingController.updateBackground(App.backgroundColors[App.currentUser.backgroundColor]);
                             } catch (Exception ex) {
                                 System.out.println("Error happened when save data.");
                                 ex.printStackTrace();
@@ -143,7 +157,7 @@ public class LoginUIController {
                 String username = loginUI.userNameBox.getText().trim().equals("") ? " " : loginUI.userNameBox.getText();
                 App.currentUser = new UnRegisteredUser();
 
-                CreateBlockArrayData.creatBlockArrayData(App.interfaceSize, App.currentUser);
+                CreateBlockArrayData.creatBlockArrayData(App.currentUser);
                 MainUIBlocksArrayPaneUpdate.updateUI(App.mainUI.blocksArray, App.currentUser.currentBlocksArrayData, App.mainUI.blocksArrayPane);
                 loginUI.setVisible(false);
             }
@@ -174,7 +188,7 @@ public class LoginUIController {
                 }
                 loginUI.setVisible(false);
 
-                CreateBlockArrayData.creatBlockArrayData(App.interfaceSize, App.currentUser);
+                CreateBlockArrayData.creatBlockArrayData(App.currentUser);
                 MainUIBlocksArrayPaneUpdate.updateUI(App.mainUI.blocksArray, App.currentUser.currentBlocksArrayData, App.mainUI.blocksArrayPane);
                 loginUI.setVisible(false);
 
@@ -207,10 +221,12 @@ public class LoginUIController {
                 newCurrentUser.setData();//set the data to prepare for saving
                 App.usersData.put(newCurrentUser.username, newCurrentUser);
                 App.currentUser = newCurrentUser;
+
                 try {
                     SaveUsersData.saveUsersData(App.usersData, App.userDataPath);
                     OptionPane.setJOptionPaneMessage(App.mainUI, "Successfully Registered and Save!", "Message", null);
                     App.mainUI.updateLastBestRecord(false);
+                    App.mainUI.save.setEnabled(false);
                 } catch (Exception e) {
                     System.out.println("Error happened when save data.");
                     e.printStackTrace();

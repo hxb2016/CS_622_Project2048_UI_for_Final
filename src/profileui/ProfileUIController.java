@@ -3,7 +3,7 @@ package profileui;
 import game2048_test.App;
 import io.SaveUsersData;
 import mainui.MainUIBlocksArrayPaneUpdate;
-import operation.Operate;
+import threadforgame.InitGame;
 import tool.*;
 import users.RegisteredUser;
 import users.UnRegisteredUser;
@@ -84,7 +84,7 @@ public class ProfileUIController {
         profileUIContent.editButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (profileUIContent.editButton.getText().equals("Edit")) {
+                if (profileUIContent.editButton.getText().equals("Edit Profile")) {
                     profileUIContent.editButton.setText("Confirm");
 
                     profileUIContent.username.setEditable(true);
@@ -109,7 +109,7 @@ public class ProfileUIController {
                         } catch (IOException ex) {
                             ex.printStackTrace();
                         }
-                        profileUIContent.editButton.setText("Edit");
+                        profileUIContent.editButton.setText("Edit Profile");
                         profileUIContent.username.setEditable(false);
                         profileUIContent.password.setEditable(false);
                         profileUIContent.age.setEditable(false);
@@ -131,6 +131,45 @@ public class ProfileUIController {
 
         });
 
+        // set action listener for quit account button
+        profileUIContent.quitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int option = OptionPane.setJOptionPaneConfirm(App.mainUI, "Quit?", "Message");
+                if (option == JOptionPane.YES_OPTION) {
+                    try {
+                        Thread handleData = new Thread() {
+                            @Override
+                            public void run() {
+                                try {
+                                    SaveUsersData.saveUsersData(App.usersData, App.userDataPath);
+                                    App.currentUser = new UnRegisteredUser();
+
+                                    // Update user table
+                                    App.mainUI.usersScrollPane.updateUsersTable();
+
+                                    CreateBlockArrayData.creatBlockArrayData(App.currentUser);
+                                    MainUIBlocksArrayPaneUpdate.updateUI(App.mainUI.blocksArray, App.currentUser.currentBlocksArrayData, App.mainUI.blocksArrayPane);
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
+
+                            }
+                        };
+
+                        InitGame initGame = new InitGame();
+                        handleData.start();
+                        initGame.start();
+                        handleData.join();
+                        initGame.join();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
+
+
         // set action listener for delete account button
         profileUIContent.delButton.addActionListener(new ActionListener() {
             @Override
@@ -138,48 +177,34 @@ public class ProfileUIController {
                 int option = OptionPane.setJOptionPaneConfirm(App.mainUI, "Delete your account?", "Message");
                 if (option == JOptionPane.YES_OPTION) {
                     try {
+                        Thread handleData = new Thread() {
+                            @Override
+                            public void run() {
+                                try {
+                                    App.usersData.remove(App.currentUser.username);
+                                    SaveUsersData.saveUsersData(App.usersData, App.userDataPath);
 
-                        App.usersData.remove(App.currentUser.username);
-                        SaveUsersData.saveUsersData(App.usersData, App.userDataPath);
+                                    App.currentUser = new UnRegisteredUser();
 
-                        App.currentUser = new UnRegisteredUser();
+                                    // Update user table
+                                    App.mainUI.usersScrollPane.updateUsersTable();
+                                    // Update champion panel
+                                    App.mainUI.ChampionPanel.setUserToPanel(App.mainUI.usersScrollPane.usersTable.champion);
 
-                        App.profileUI.setVisible(false);
+                                    CreateBlockArrayData.creatBlockArrayData(App.currentUser);
+                                    MainUIBlocksArrayPaneUpdate.updateUI(App.mainUI.blocksArray, App.currentUser.currentBlocksArrayData, App.mainUI.blocksArrayPane);
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
 
-                        CreateBlockArrayData.creatBlockArrayData(App.interfaceSize, App.currentUser);
-                        MainUIBlocksArrayPaneUpdate.updateUI(App.mainUI.blocksArray, App.currentUser.currentBlocksArrayData, App.mainUI.blocksArrayPane);
+                            }
+                        };
 
-                        //Update profile photo of profile panel
-                        ImageIconForPhoto icon = new ImageIconForPhoto(App.photosLocation + "profile1.png");
-                        profileUIContent.profilePhoto.roundLabel.setIcon(icon);
-
-                        //Update profile photo of main panel
-                        ImageIconForPhoto photo = new ImageIconForPhoto(App.photosLocation + "profile1.png");
-                        App.mainUI.profilePhoto.roundLabel.setIcon(photo);
-
-                        // Update profileUIContent username
-                        profileUIContent.profilePhoto.username.setText(App.currentUser.username);
-                        // Update mainUI username
-                        App.mainUI.profilePhoto.setUsername(App.currentUser.username);
-                        // Update user table
-                        App.mainUI.usersScrollPane.updateUsersTable();
-
-                        // init profile page
-                        App.ifDeleteAccount = true;
-
-                        // Update record panel
-                        App.mainUI.updateLastBestRecord(true);
-
-                        // Update champion panel
-                        App.mainUI.ChampionPanel.setUserToPanel(App.mainUI.usersScrollPane.usersTable.champion);
-
-                        App.ifEnd = false;
-
-                        //init timer panel
-                        UpdateTimerPane.endTimer();
-                        App.mainUI.timerPane.setSecond("0 s");
-
-                        Operate.ifStartOperate = false;
+                        InitGame initGame = new InitGame();
+                        handleData.start();
+                        initGame.start();
+                        handleData.join();
+                        initGame.join();
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }

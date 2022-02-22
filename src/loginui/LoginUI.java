@@ -34,7 +34,7 @@ public class LoginUI extends JDialog {
     private LoginUI(Frame owner) {
         super(owner);
         this.setResizable(false);
-        this.setTitle("loginui");
+        this.setTitle("login");
         ImageIcon logo = new ImageIcon("src" + File.separator + "image" + File.separator + "2048.png");
         this.setIconImage(logo.getImage());
         this.setLayout(new BorderLayout());

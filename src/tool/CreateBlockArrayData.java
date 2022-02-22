@@ -14,8 +14,8 @@ public class CreateBlockArrayData {
     /**
      * Purpose of creatBlockArrayData is to set a blockArray to currentBlocksArrayData of current user
      */
-    public static void creatBlockArrayData(int size, User currentUser) {
-        currentUser.currentBlocksArrayData = new Block[size][size];
+    public static void creatBlockArrayData(User currentUser) {
+        currentUser.currentBlocksArrayData = new Block[currentUser.gameSize][currentUser.gameSize];
         for (int i = 0; i < currentUser.currentBlocksArrayData.length; i++) {
             for (int j = 0; j < currentUser.currentBlocksArrayData[i].length; j++) {
                 currentUser.currentBlocksArrayData[i][j] = new Block(0, new int[]{i, j});

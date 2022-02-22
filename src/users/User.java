@@ -1,12 +1,14 @@
 package users;
 
 import block.Block;
+import game2048_test.App;
 
+import java.awt.*;
 import java.io.Serializable;
 
 /**
  * This class is an abstract class
- *
+ * <p>
  * Author: Xiaobing Hou
  * Date: 02/12/2022
  * Course: CS-622
@@ -18,6 +20,9 @@ public abstract class User implements Serializable {
     public int age;
     public String gender;
     public String introduce;
+    public String[] photoRecordLayout = new String[]{"left", "center", "right"};// The order is photo, best record,last record
+    public int backgroundColor = 0;
+    public int gameSize = 4;
     public Block[][] currentBlocksArrayData;//it is used to creat number block interface
     public int currentTakeTime;// it is used to record the timer users take
     public String currentResult;// it is used to record win or fail

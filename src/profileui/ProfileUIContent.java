@@ -6,6 +6,7 @@ import loginui.LoginUILabel;
 import users.User;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 /**
@@ -22,32 +23,38 @@ public class ProfileUIContent extends JPanel {
     public JTextField gender;
     public JTextField age;
     public JTextField introduction;
-    public JPasswordField password = null;
-    public JButton editButton = null;
-    public JButton delButton = null;
+    public JPasswordField password;
+    public JButton editButton;
+    public JButton delButton;
+    public JButton quitButton;
 
     public static ProfileUIContent profileUIContent = null;
 
     private ProfileUIContent(User user) {
         profilePhoto = new ProfilePhoto(user);
+        profilePhoto.setOpaque(false);
         username = new ProfileTextField(user.username);
         gender = new ProfileTextField(user.gender);
         age = new ProfileTextField(user.age + "");
         introduction = new ProfileTextField(user.introduce);
 
         JPanel topPanel = new JPanel();
+        topPanel.setOpaque(false);
         profilePhoto.username.setText(user.username);
         topPanel.add(profilePhoto);
 
         JPanel bottomPanel = new JPanel();
+        bottomPanel.setOpaque(false);
         bottomPanel.setLayout(new GridLayout(6, 1));
 
         JPanel usernamePane = new JPanel();
+        usernamePane.setOpaque(false);
         JLabel usernameTitle = new LoginUILabel("Username: ", SwingConstants.RIGHT);
         usernamePane.add(usernameTitle);
         usernamePane.add(username);
 
         JPanel passwordPane = new JPanel();
+        passwordPane.setOpaque(false);
         JLabel passwordTitle = new LoginUILabel("Password: ", SwingConstants.RIGHT);
         password = new JPasswordField(String.valueOf(user.password));
         password.setPreferredSize(new Dimension(300, 30));
@@ -58,27 +65,35 @@ public class ProfileUIContent extends JPanel {
         passwordPane.add(password);
 
         JPanel agePane = new JPanel();
+        agePane.setOpaque(false);
         JLabel ageTitle = new LoginUILabel("Age: ", SwingConstants.RIGHT);
         agePane.add(ageTitle);
         agePane.add(age);
 
         JPanel genderPane = new JPanel();
+        genderPane.setOpaque(false);
         JLabel genderTitle = new LoginUILabel("Gender: ", SwingConstants.RIGHT);
         genderPane.add(genderTitle);
         genderPane.add(gender);
 
         JPanel introductionPane = new JPanel();
+        introductionPane.setOpaque(false);
         JLabel introductionTitle = new LoginUILabel("Intr: ", SwingConstants.RIGHT);
         introductionPane.add(introductionTitle);
         introductionPane.add(introduction);
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(1, 2));
-        editButton = new LoginUIButton("Edit");
+        buttonPanel.setOpaque(false);
+        buttonPanel.setLayout(new GridLayout(1, 3));
+        buttonPanel.setBorder(new EmptyBorder(10,0,0,0));
+        editButton = new LoginUIButton("Edit Profile");
         editButton.setFont(new Font("Times New Roman", Font.BOLD, 18));
+        quitButton = new LoginUIButton("Quit Account");
+        quitButton.setFont(new Font("Times New Roman", Font.BOLD, 18));
         delButton = new LoginUIButton("Del Account");
         delButton.setFont(new Font("Times New Roman", Font.BOLD, 18));
         buttonPanel.add(editButton);
+        buttonPanel.add(quitButton);
         buttonPanel.add(delButton);
 
         bottomPanel.add(usernamePane);
@@ -97,7 +112,6 @@ public class ProfileUIContent extends JPanel {
      */
     public static void setProfileUIContent(User user) {
         if (App.ifDeleteAccount) {
-
             App.profileUI.remove(profileUIContent);
             profileUIContent = new ProfileUIContent(user);
             App.profileUI.add(profileUIContent, BorderLayout.CENTER);
@@ -112,6 +126,7 @@ public class ProfileUIContent extends JPanel {
                 ProfileUIController.setController(profileUIContent);
             }
         }
+        profileUIContent.setBackground(App.backgroundColors[App.currentUser.backgroundColor]);
     }
 
 }

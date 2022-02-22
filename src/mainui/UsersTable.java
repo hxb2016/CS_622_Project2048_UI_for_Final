@@ -14,14 +14,14 @@ import java.util.stream.Collectors;
 
 /**
  * purpose of this class is to create a table which includes usernames and whose best record's taken time
- *
+ * <p>
  * Author: Xiaobing Hou
  * Date: 02/12/2022
  * Course: CS-622
  */
 public class UsersTable extends JTable {
     private final String[] title = new String[]{"Username", "Best record"};
-    public String[] champion=new String[2];
+    public String[] champion = new String[2];
 
     /**
      * purpose of this method is to set the data into the table and style of the table
@@ -77,8 +77,6 @@ public class UsersTable extends JTable {
 
         this.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.setSelectionBackground(new Color(184, 207, 229));
-
-
     }
 
     /**
@@ -105,8 +103,10 @@ public class UsersTable extends JTable {
             data[index][1] = ((RegisteredUser) usersData.get(username)).bestTakeTime == 0 ? "null" : ((RegisteredUser) usersData.get(username)).bestTakeTime + " s";
             index++;
         }
-        champion[0]=data[0][0];
-        champion[1]=data[0][1];
+        if (data.length != 0) {
+            champion[0] = data[0][0];
+            champion[1] = data[0][1];
+        }
         return data;
     }
 

@@ -21,6 +21,7 @@ public class GameTimerPane extends JPanel {
 
     public GameTimerPane() {
         JPanel timerPane = new JPanel();
+        timerPane.setOpaque(false);
         timerPane.setLayout(new BorderLayout());
 
         this.second.setFont(new Font("Times New Roman", Font.BOLD, 30));

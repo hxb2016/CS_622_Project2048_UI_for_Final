@@ -15,6 +15,7 @@ public class ProfileUI extends JDialog {
     public ProfileUI(JFrame f) {
         super(f);
         this.setSize(500, 510);
+        this.setTitle("Profile");
         this.setLocationRelativeTo(null);
         this.setLayout(new BorderLayout());
     }

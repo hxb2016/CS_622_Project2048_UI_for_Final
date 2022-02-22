@@ -28,7 +28,7 @@ public class LoginUIButton extends JButton {
 
                 @Override
                 public void mouseEntered(MouseEvent e) {
-                    finalThis.setForeground(new Color(18, 150, 219));
+                    finalThis.setForeground(Color.BLACK);
                 }
 
                 @Override

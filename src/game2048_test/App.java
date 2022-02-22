@@ -8,6 +8,7 @@ import profileui.ProfileUI;
 import threadforgame.GetProfileUIThread;
 import users.User;
 
+import java.awt.*;
 import java.io.File;
 import java.util.Map;
 
@@ -22,6 +23,8 @@ import java.util.Map;
  * Course: CS-622
  */
 public class App {
+    public static Color[] backgroundColors = new Color[]{Color.white,new Color(132,148,147), new Color(238,194,181),
+                                                                    new Color(151,138,147), new Color(235,219,204)};
     public static String photosLocation = "src" + File.separator + "image" + File.separator + "photos" + File.separator;
     public static String iconsLocation = "src" + File.separator + "image" + File.separator;
     public static User currentUser = null;
@@ -33,7 +36,9 @@ public class App {
     public static LoginUI loginUI = null;
     public static ProfileUI profileUI = null;
     public static boolean ifEnd = false;// Judge that the game end or not
-    public static boolean ifDeleteAccount = false;// Judge that the game end or not
+    public static boolean ifDeleteAccount = false;
+    public static boolean ifPauseTimer = false;
+    public static boolean ifStandardMode = true;
 
     private final static GetDataThread getDataThread = new GetDataThread();
 
