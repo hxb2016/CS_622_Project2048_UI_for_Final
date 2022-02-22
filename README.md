@@ -16,7 +16,7 @@ In the game, user can play as unregistered or registered user.
 
 ### Something for registered user:
 
-As the registered users, they can save data and set themselves layout and color of the interface. they can login, quit, delete, and edit your account. 
+As the registered users, they can login account. After login, they can quit, delete, edit account, set layout, game size and the background color of the interface and save data
 
 ### Something for unregistered user:
 
