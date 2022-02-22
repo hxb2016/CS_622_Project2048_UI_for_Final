@@ -5,7 +5,13 @@ import operation.Operate;
 import profileui.ImageIconForPhoto;
 import settingui.SettingController;
 import tool.UpdateTimerPane;
-
+/**
+ * Purpose of this class is to create a InitGame thread for init interface
+ * <p>
+ * Author: Xiaobing Hou
+ * Date: 02/12/2022
+ * Course: CS-622
+ */
 public class InitGame extends Thread{
     public InitGame() {
     }
