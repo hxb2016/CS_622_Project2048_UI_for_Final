@@ -30,13 +30,13 @@ public class ProfileUIContent extends JPanel {
 
     public static ProfileUIContent profileUIContent = null;
 
-    private ProfileUIContent(User user) {
+    private ProfileUIContent(User user){
         profilePhoto = new ProfilePhoto(user);
         profilePhoto.setOpaque(false);
-        username = new ProfileTextField(user.username);
-        gender = new ProfileTextField(user.gender);
-        age = new ProfileTextField(user.age + "");
-        introduction = new ProfileTextField(user.introduce);
+        username = ProfileTextField.getProfileTextField(user.username);
+        gender = ProfileTextField.getProfileTextField(user.gender);
+        age = ProfileTextField.getProfileTextField(user.age + "");
+        introduction = ProfileTextField.getProfileTextField(user.introduce);
 
         JPanel topPanel = new JPanel();
         topPanel.setOpaque(false);
@@ -56,7 +56,14 @@ public class ProfileUIContent extends JPanel {
         JPanel passwordPane = new JPanel();
         passwordPane.setOpaque(false);
         JLabel passwordTitle = new LoginUILabel("Password: ", SwingConstants.RIGHT);
-        password = new JPasswordField(String.valueOf(user.password));
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            password = new JPasswordField(String.valueOf(user.password));
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (Exception e) {
+            password = new JPasswordField(String.valueOf(user.password));
+            e.printStackTrace();
+        }
         password.setPreferredSize(new Dimension(300, 30));
         password.setForeground(new Color(18, 150, 219));
         password.setFont(new Font("Times New Roman", Font.BOLD, 18));
@@ -110,7 +117,7 @@ public class ProfileUIContent extends JPanel {
     /**
      * purpose of this method is to make sure that there is always one component
      */
-    public static void setProfileUIContent(User user) {
+    public static void setProfileUIContent(User user){
         if (App.ifDeleteAccount) {
             App.profileUI.remove(profileUIContent);
             profileUIContent = new ProfileUIContent(user);

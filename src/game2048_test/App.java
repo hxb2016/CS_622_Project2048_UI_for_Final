@@ -24,11 +24,16 @@ import java.util.Map;
  */
 public class App {
     public static Color[] backgroundColors = new Color[]{Color.white,new Color(132,148,147), new Color(238,194,181),
-                                                                    new Color(151,138,147), new Color(235,219,204)};
+                                                                    new Color(151,138,147), new Color(235,219,204),
+                                                                    new Color(244,218,255),new Color(165,197,254),
+                                                                    new Color(192,222,232),new Color(81,192,209),
+                                                                    new Color(154,250,239),new Color(203,190,216)};
     public static String photosLocation = "src" + File.separator + "image" + File.separator + "photos" + File.separator;
     public static String iconsLocation = "src" + File.separator + "image" + File.separator;
     public static User currentUser = null;
-    public final static int interfaceSize = 4;// Purpose of this parameter is to decide the blockArray's size
+    public final static int defaultGameSize = 4;// Purpose of this parameter is to decide the blockArray's size
+    public final static int minGameSize = 3;
+    public final static int maxGameSize = 5;
     public final static int WinNum = 16;// You will win the game, if there is any number larger than WinNum
     public static Map<String, User> usersData = null;
     public static String userDataPath = "src" + File.separator + "userdata" + File.separator + "Data.dat";

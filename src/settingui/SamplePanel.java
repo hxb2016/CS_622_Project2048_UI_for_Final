@@ -1,6 +1,7 @@
 package settingui;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +19,14 @@ public class SamplePanel extends JPanel {
     public List<JRadioButton> jRadioButtonList = new ArrayList<>();
 
     public SamplePanel(String title) {
-        this.setLayout(new BorderLayout(0, 2));
+        this.setLayout(new GridLayout(2,1));
+        this.setBorder(new LineBorder(Color.GRAY,1));
 
         JLabel photoSamplePanel_top = new JLabel(title, SwingConstants.CENTER);
-        photoSamplePanel_top.setFont(new Font("Times New Roman", Font.BOLD, 16));
+        photoSamplePanel_top.setFont(new Font("Times New Roman", Font.BOLD, 18));
 
         JPanel photoSamplePanel_bottom = new JPanel();
-        photoSamplePanel_bottom.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 0));
+        photoSamplePanel_bottom.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 0));
         left = new RadioButtonForSetting("left");
         center = new RadioButtonForSetting("center");
         right = new RadioButtonForSetting("right");
@@ -41,8 +43,8 @@ public class SamplePanel extends JPanel {
         jRadioButtonList.add(center);
         jRadioButtonList.add(right);
 
-        this.add(photoSamplePanel_top, BorderLayout.NORTH);
-        this.add(photoSamplePanel_bottom, BorderLayout.CENTER);
+        this.add(photoSamplePanel_top);
+        this.add(photoSamplePanel_bottom);
     }
 
 }

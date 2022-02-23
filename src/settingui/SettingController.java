@@ -38,16 +38,20 @@ public class SettingController {
             public void actionPerformed(ActionEvent e) {
 
                 int currentSize = Integer.parseInt(settingUI.sizeLabel.getText());
-                if (currentSize > 3) {
+                if (currentSize > App.minGameSize) {
                     int nextSize = currentSize - 1;
                     settingUI.sizeLabel.setText(nextSize + "");
                     App.currentUser.gameSize = nextSize;
                     updateMainInterface();
-                    if (nextSize == 3) {
+                    if (nextSize == App.minGameSize) {
                         OptionPane.setJOptionPaneMessage(App.mainUI, "Not standard mode. Can't save record", "Message", null);
                         App.ifStandardMode = false;
+                        settingUI.leftSize.setEnabled(false);
                     } else {
                         App.ifStandardMode = true;
+                    }
+                    if (nextSize == App.maxGameSize - 1) {
+                        settingUI.rightSize.setEnabled(true);
                     }
                 }
 
@@ -58,16 +62,21 @@ public class SettingController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int currentSize = Integer.parseInt(settingUI.sizeLabel.getText());
-                if (currentSize < 5) {
+                if (currentSize < App.maxGameSize) {
                     int nextSize = currentSize + 1;
                     settingUI.sizeLabel.setText(nextSize + "");
                     App.currentUser.gameSize = nextSize;
                     updateMainInterface();
-                    if (nextSize == 5) {
+                    if (nextSize == App.maxGameSize) {
                         OptionPane.setJOptionPaneMessage(App.mainUI, "Not standard mode. Can't save record", "Message", null);
                         App.ifStandardMode = false;
+                        settingUI.rightSize.setEnabled(false);
                     } else {
                         App.ifStandardMode = true;
+                    }
+
+                    if (nextSize == App.minGameSize + 1) {
+                        settingUI.leftSize.setEnabled(true);
                     }
                 }
             }
@@ -81,11 +90,15 @@ public class SettingController {
                     settingUI.colorLabel.setBackground(App.backgroundColors[currentColorNum]);
                     updateBackground(App.backgroundColors[currentColorNum]);
                     App.currentUser.backgroundColor = currentColorNum;
+                    if (currentColorNum == App.backgroundColors.length - 2) {
+                        settingUI.rightColor.setEnabled(true);
+                    }
                 }
                 if (currentColorNum == 0) {
                     settingUI.colorLabel.setBackground(App.backgroundColors[0]);
                     updateBackground(App.backgroundColors[currentColorNum]);
                     App.currentUser.backgroundColor = currentColorNum;
+                    settingUI.leftColor.setEnabled(false);
                 }
 
 
@@ -101,6 +114,12 @@ public class SettingController {
                     settingUI.colorLabel.setBackground(App.backgroundColors[currentColorNum]);
                     updateBackground(App.backgroundColors[currentColorNum]);
                     App.currentUser.backgroundColor = currentColorNum;
+                    if (currentColorNum == App.backgroundColors.length - 1) {
+                        settingUI.rightColor.setEnabled(false);
+                    }
+                    if (currentColorNum == 1) {
+                        settingUI.leftColor.setEnabled(true);
+                    }
                 }
             }
         });

@@ -158,10 +158,24 @@ public class MainUIController {
             public void actionPerformed(ActionEvent e) {
                 if (App.currentUser instanceof RegisteredUser) {
                     SettingUI settingUI = SettingUI.getSettingUI(App.mainUI);
+
                     settingUI.colorLabel.setBackground(App.backgroundColors[App.currentUser.backgroundColor]);
                     SettingController.currentColorNum = App.currentUser.backgroundColor;
                     SettingController.selectWhich(App.currentUser, settingUI.jRadioButtonList);
                     settingUI.sizeLabel.setText(App.currentUser.gameSize + "");
+
+                    if (App.currentUser.gameSize == App.maxGameSize) {
+                        settingUI.rightSize.setEnabled(false);
+                    } else if (App.currentUser.gameSize == App.minGameSize) {
+                        settingUI.leftSize.setEnabled(false);
+                    }
+
+                    if (App.currentUser.backgroundColor == 0) {
+                        settingUI.leftColor.setEnabled(false);
+                    } else if (App.currentUser.backgroundColor == App.backgroundColors.length-1) {
+                        settingUI.rightColor.setEnabled(false);
+                    }
+
                     settingUI.setVisible(true);
 
                     UpdateTimerPane.endTimer();

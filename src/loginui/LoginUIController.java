@@ -40,7 +40,7 @@ public class LoginUIController {
                             SettingController.updateMainInterface();
                             SettingController.updateBackground(App.backgroundColors[App.currentUser.backgroundColor]);
                             SettingController.updateMainTop(App.mainUI, App.currentUser);
-                            if (App.currentUser.gameSize != App.interfaceSize) {
+                            if (App.currentUser.gameSize != App.defaultGameSize) {
                                 App.ifStandardMode = false;
                             }
                         } else {
@@ -55,7 +55,7 @@ public class LoginUIController {
                                 OptionPane.setJOptionPaneMessage(App.mainUI, "Successfully Login and Save!", "Message", null);
                                 App.mainUI.save.setEnabled(false);
 
-                                if (App.currentUser.gameSize != App.interfaceSize) {
+                                if (App.currentUser.gameSize != App.defaultGameSize) {
                                     SettingController.updateMainInterface();
                                     App.ifStandardMode = false;
                                 }

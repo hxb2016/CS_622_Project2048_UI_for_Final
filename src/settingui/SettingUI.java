@@ -34,7 +34,7 @@ public class SettingUI extends JDialog {
 
     private SettingUI(JFrame owner) {
         super(owner);
-        this.setSize(450, 450);
+        this.setSize(600, 350);
         this.setLocationRelativeTo(null);
         this.setTitle("Setting");
         this.setLayout(new GridLayout(3, 1));
@@ -54,12 +54,12 @@ public class SettingUI extends JDialog {
         });
 
         JPanel photoAndRecordPanel = new JPanel();
-        photoAndRecordPanel.setBorder(new EmptyBorder(10, 0, 0, 0));
+        photoAndRecordPanel.setBorder(new EmptyBorder(0, 5, 0, 5));
         photoAndRecordPanel.setLayout(new GridLayout(1, 3, 5, 0));
 
-        photoAndTimer = new SamplePanel("Photo, timer layout");
-        bestRecord = new SamplePanel("Best record layout");
-        lastRecord = new SamplePanel("Last record layout");
+        photoAndTimer = new SamplePanel("Photo panel location");
+        bestRecord = new SamplePanel("Best panel location");
+        lastRecord = new SamplePanel("Last panel location");
 
         jRadioButtonList = new ArrayList<>();
         jRadioButtonList.add(photoAndTimer.jRadioButtonList);
@@ -76,7 +76,7 @@ public class SettingUI extends JDialog {
 
         JLabel gameSize_title = new JLabel("Change game size", SwingConstants.CENTER);
         gameSize_title.setFont(new Font("Times New Roman", Font.BOLD, 20));
-        gameSize_title.setPreferredSize(new Dimension(450, 30));
+        gameSize_title.setPreferredSize(new Dimension(this.getWidth(), 30));
 
         ImageIcon left = new ImageIcon(App.iconsLocation + "left.png");
         ImageIcon right = new ImageIcon(App.iconsLocation + "right.png");
@@ -97,7 +97,7 @@ public class SettingUI extends JDialog {
 
         JLabel uiColor_title = new JLabel("Change background color", SwingConstants.CENTER);
         uiColor_title.setFont(new Font("Times New Roman", Font.BOLD, 20));
-        uiColor_title.setPreferredSize(new Dimension(450, 30));
+        uiColor_title.setPreferredSize(new Dimension(this.getWidth(), 30));
 
         leftColor = ButtonForSetting.getButton(left);
         rightColor = ButtonForSetting.getButton(right);

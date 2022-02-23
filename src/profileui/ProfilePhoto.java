@@ -37,7 +37,7 @@ public class ProfilePhoto extends JPanel {
 
         username = new JLabel("", SwingConstants.CENTER);
         username.setPreferredSize(new Dimension(200, 20));
-        username.setForeground(new Color(200, 170, 100));
+        username.setForeground(Color.BLACK);
         username.setFont(new Font("Times New Roman", Font.BOLD, 20));
         username.setLayout(new BorderLayout());
 

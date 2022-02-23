@@ -17,7 +17,7 @@ import java.awt.event.*;
  * Course: CS-622
  */
 public class MainUI extends JFrame {
-    public MainUIBlockLabel[][] blocksArray = new MainUIBlockLabel[App.interfaceSize][App.interfaceSize];
+    public MainUIBlockLabel[][] blocksArray = new MainUIBlockLabel[App.defaultGameSize][App.defaultGameSize];
     public JPanel blocksArrayPane_outPanel;
     public JPanel recordPane;
     public JPanel buttonPane;
@@ -26,11 +26,11 @@ public class MainUI extends JFrame {
     public JPanel bestRecordOutPane;
     public JPanel lastRecordOutPane;
     public JLabel lastTitleLabel = new JLabel("Last Record: Taken ...s", SwingConstants.CENTER);
-    public MainUIBlockLabel[][] lastBlockArray = new MainUIBlockLabel[App.interfaceSize][App.interfaceSize];
+    public MainUIBlockLabel[][] lastBlockArray = new MainUIBlockLabel[App.defaultGameSize][App.defaultGameSize];
     public JPanel lastRecord = new MainUIBlocksArrayPane(lastBlockArray, 10, 2);
 
     public JLabel bestTitleLabel = new JLabel("best Record: Taken ...s", SwingConstants.CENTER);
-    public MainUIBlockLabel[][] bestBlockArray = new MainUIBlockLabel[App.interfaceSize][App.interfaceSize];
+    public MainUIBlockLabel[][] bestBlockArray = new MainUIBlockLabel[App.defaultGameSize][App.defaultGameSize];
     public JPanel bestRecord = new MainUIBlocksArrayPane(bestBlockArray, 10, 2);
 
     public ProfilePhoto profilePhoto = new ProfilePhoto(App.currentUser);
@@ -180,13 +180,13 @@ public class MainUI extends JFrame {
             this.bestTitleLabel.setText("Last Record: Taken ... s");
 
             lastRecordOutPane.remove(lastRecord);
-            lastBlockArray = new MainUIBlockLabel[App.interfaceSize][App.interfaceSize];
+            lastBlockArray = new MainUIBlockLabel[App.defaultGameSize][App.defaultGameSize];
             lastRecord = new MainUIBlocksArrayPane(lastBlockArray, 10, 2);
             lastRecordOutPane.add(lastRecord, BorderLayout.CENTER);
             lastRecordOutPane.updateUI();
 
             bestRecordOutPane.remove(bestRecord);
-            bestBlockArray = new MainUIBlockLabel[App.interfaceSize][App.interfaceSize];
+            bestBlockArray = new MainUIBlockLabel[App.defaultGameSize][App.defaultGameSize];
             bestRecord = new MainUIBlocksArrayPane(bestBlockArray, 10, 2);
             bestRecordOutPane.add(bestRecord, BorderLayout.CENTER);
             bestRecordOutPane.updateUI();
