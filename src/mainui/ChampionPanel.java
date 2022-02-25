@@ -23,9 +23,9 @@ public class ChampionPanel extends JPanel {
         bestRecord.setHorizontalAlignment(SwingConstants.CENTER);
         bestRecord.setFont(new Font("Times New Roman", Font.ITALIC, 16));
         bestRecord.setForeground(Color.WHITE);
-        this.setLayout(new GridLayout(3, 1));
-        this.setBackground(new Color(247, 124, 95));
-        this.setBorder(new EmptyBorder(0, 5, 0, 5));
+        setLayout(new GridLayout(3, 1));
+        setBackground(new Color(247, 124, 95));
+        setBorder(new EmptyBorder(0, 5, 0, 5));
 
         JLabel title = new JLabel("Champion", SwingConstants.CENTER);
         title.setFont(new Font("Times New Roman", Font.BOLD, 16));
@@ -49,16 +49,16 @@ public class ChampionPanel extends JPanel {
         recordPanel.add(bestRecordTitle, BorderLayout.WEST);
         recordPanel.add(bestRecord, BorderLayout.CENTER);
 
-        this.add(title);
-        this.add(namePanel);
-        this.add(recordPanel);
+        add(title);
+        add(namePanel);
+        add(recordPanel);
     }
 
     /**
      * Purpose of the method is to set and update content to champion panel
      */
     public void setUserToPanel(String[] champion) {
-        this.username.setText(champion[0]);
-        this.bestRecord.setText(champion[1]);
+        username.setText(champion[0]);
+        bestRecord.setText(champion[1]);
     }
 }

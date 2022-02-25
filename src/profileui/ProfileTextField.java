@@ -1,5 +1,7 @@
 package profileui;
 
+import tool.TextFieldForGame;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,20 +9,19 @@ import java.awt.*;
  * purpose of this class is to create text box component for typing from users
  * <p>
  * Author: Xiaobing Hou
- * Date: 02/12/2022
+ * Date: 02/25/2022
  * Course: CS-622
  */
-public class ProfileTextField extends JTextField {
+public class ProfileTextField extends TextFieldForGame {
     public ProfileTextField(String message) {
-        this.setPreferredSize(new Dimension(300, 30));
-        this.setForeground(new Color(18, 150, 219));
-        this.setFont(new Font("Times New Roman", Font.BOLD, 18));
-        this.setEditable(false);
-        this.setText(message);
+        super(message);
+        setPreferredSize(new Dimension(300, 30));
     }
-
+    /**
+     * purpose of this method is to get a TextField which has style of the current system
+     */
     public static ProfileTextField getProfileTextField(String message) {
-        ProfileTextField profileTextField = null;
+        ProfileTextField profileTextField;
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             profileTextField = new ProfileTextField(message);

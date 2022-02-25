@@ -14,8 +14,6 @@ import users.UnRegisteredUser;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
@@ -34,165 +32,137 @@ public class MainUIController {
 
     public static void setUIController(MainUI mainUI) {
         // set action listener for up button in MainUI
-        mainUI.up.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    if (!App.ifEnd) {
-                        Operate.operation(38, App.currentUser);
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+        mainUI.up.addActionListener(e -> {
+            try {
+                if (!App.ifEnd) {
+                    Operate.operation(38, App.currentUser);
                 }
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
         });
 
         // set action listener for left button in MainUI
-        mainUI.left.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    if (!App.ifEnd) {
-                        Operate.operation(37, App.currentUser);
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+        mainUI.left.addActionListener(e -> {
+            try {
+                if (!App.ifEnd) {
+                    Operate.operation(37, App.currentUser);
                 }
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
         });
 
         // set action listener for down button in MainUI
-        mainUI.down.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    if (!App.ifEnd) {
-                        Operate.operation(40, App.currentUser);
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+        mainUI.down.addActionListener(e -> {
+            try {
+                if (!App.ifEnd) {
+                    Operate.operation(40, App.currentUser);
                 }
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
         });
 
         // set action listener for right button in MainUI
-        mainUI.right.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    if (!App.ifEnd) {
-                        Operate.operation(39, App.currentUser);
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+        mainUI.right.addActionListener(e -> {
+            try {
+                if (!App.ifEnd) {
+                    Operate.operation(39, App.currentUser);
                 }
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
         });
 
         // set action listener for New Game button in MainUI
-        mainUI.newGame.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (mainUI.save.isEnabled()) {
-                    int userOption = OptionPane.setJOptionPaneConfirm(App.mainUI, "Haven't saved result. New game now?", "Message");
-                    if (userOption == JOptionPane.YES_OPTION) {
-                        newGame(mainUI);
-                    }
-                } else {
+        mainUI.newGame.addActionListener(e -> {
+            if (mainUI.save.isEnabled()) {
+                int userOption = OptionPane.setJOptionPaneConfirm(App.mainUI, "Haven't saved result. New game now?", "Message");
+                if (userOption == JOptionPane.YES_OPTION) {
                     newGame(mainUI);
                 }
-
-
+            } else {
+                newGame(mainUI);
             }
+
 
         });
 
         // set action listener for pause button in MainUI
-        mainUI.pause.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                App.ifPauseTimer = !App.ifPauseTimer;
+        mainUI.pause.addActionListener(e -> {
+            App.ifPauseTimer = !App.ifPauseTimer;
 
-                if (App.ifPauseTimer) {
-                    UpdateTimerPane.pauseTimer();
-                    mainUI.pause.setText("Continue");
-                } else {
-                    UpdateTimerPane.startTimer();
-                    mainUI.pause.setText("Pause");
-                }
-
+            if (App.ifPauseTimer) {
+                UpdateTimerPane.pauseTimer();
+                mainUI.pause.setText("Continue");
+            } else {
+                UpdateTimerPane.startTimer();
+                mainUI.pause.setText("Pause");
             }
 
         });
 
         // set action listener for save button in MainUI
-        mainUI.save.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (App.usersData == null) {
-                    App.usersData = new HashMap<>();
-                }
-                if (App.currentUser instanceof RegisteredUser) {
-                    ((RegisteredUser) App.currentUser).setData();//set the data to prepare for saving
-                    App.usersData.put(App.currentUser.username, App.currentUser);
-                    try {
-                        SaveUsersData.saveUsersData(App.usersData, App.userDataPath);
-                        App.mainUI.updateLastBestRecord(false);
-                        App.mainUI.usersScrollPane.updateUsersTable();
-                        // Update champion panel
-                        App.mainUI.ChampionPanel.setUserToPanel(App.mainUI.usersScrollPane.usersTable.champion);
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                    mainUI.save.setEnabled(false);
-                } else {
-                    App.loginUI.setVisible(true);
-                }
+        mainUI.save.addActionListener(e -> {
+            if (App.usersData == null) {
+                App.usersData = new HashMap<>();
             }
-
+            if (App.currentUser instanceof RegisteredUser) {
+                ((RegisteredUser) App.currentUser).setData();//set the data to prepare for saving
+                App.usersData.put(App.currentUser.username, App.currentUser);
+                try {
+                    SaveUsersData.saveUsersData(App.usersData, App.userDataPath);
+                    App.mainUI.updateLastBestRecord(false);
+                    App.mainUI.usersScrollPane.updateUsersTable();
+                    // Update champion panel
+                    App.mainUI.ChampionPanel.setUserToPanel(App.mainUI.usersScrollPane.usersTable.champion);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                mainUI.save.setEnabled(false);
+            } else {
+                App.loginUI.setVisible(true);
+            }
         });
 
         // set action listener for setting button in MainUI
-        mainUI.setting.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (App.currentUser instanceof RegisteredUser) {
-                    SettingUI settingUI = SettingUI.getSettingUI(App.mainUI);
+        mainUI.setting.addActionListener(e -> {
+            if (App.currentUser instanceof RegisteredUser) {
+                SettingUI settingUI = SettingUI.getSettingUI(App.mainUI);
 
-                    settingUI.colorLabel.setBackground(App.backgroundColors[App.currentUser.backgroundColor]);
-                    SettingController.currentColorNum = App.currentUser.backgroundColor;
-                    SettingController.selectWhich(App.currentUser, settingUI.jRadioButtonList);
-                    settingUI.sizeLabel.setText(App.currentUser.gameSize + "");
+                settingUI.colorLabel.setBackground(App.backgroundColors[App.currentUser.backgroundColor]);
+                SettingController.currentColorNum = App.currentUser.backgroundColor;
+                SettingController.selectWhich(App.currentUser, settingUI.jRadioButtonList);
+                settingUI.sizeLabel.setText(App.currentUser.gameSize + "");
 
-                    if (App.currentUser.gameSize == App.maxGameSize) {
-                        settingUI.rightSize.setEnabled(false);
-                    } else if (App.currentUser.gameSize == App.minGameSize) {
-                        settingUI.leftSize.setEnabled(false);
-                    }
-
-                    if (App.currentUser.backgroundColor == 0) {
-                        settingUI.leftColor.setEnabled(false);
-                    } else if (App.currentUser.backgroundColor == App.backgroundColors.length-1) {
-                        settingUI.rightColor.setEnabled(false);
-                    }
-
-                    settingUI.setVisible(true);
-
-                    UpdateTimerPane.endTimer();
-                    if (App.mainUI.timerPane.timerHideOrShow) {
-                        mainUI.timerPane.setSecond("0 s");
-                    }
-                    Operate.ifStartOperate = false;
-                    App.ifEnd = false;
-                    App.ifPauseTimer = false;
-                    mainUI.pause.setText("Pause");
-                    mainUI.pause.setEnabled(false);
-                    mainUI.save.setEnabled(false);
-                } else {
-                    App.loginUI.setVisible(true);
+                if (App.currentUser.gameSize == App.maxGameSize) {
+                    settingUI.rightSize.setEnabled(false);
+                } else if (App.currentUser.gameSize == App.minGameSize) {
+                    settingUI.leftSize.setEnabled(false);
                 }
-            }
 
+                if (App.currentUser.backgroundColor == 0) {
+                    settingUI.leftColor.setEnabled(false);
+                } else if (App.currentUser.backgroundColor == App.backgroundColors.length-1) {
+                    settingUI.rightColor.setEnabled(false);
+                }
+
+                settingUI.setVisible(true);
+
+                UpdateTimerPane.endTimer();
+                if (App.mainUI.timerPane.timerHideOrShow) {
+                    mainUI.timerPane.setSecond("0 s");
+                }
+                Operate.ifStartOperate = false;
+                App.ifEnd = false;
+                App.ifPauseTimer = false;
+                mainUI.pause.setText("Pause");
+                mainUI.pause.setEnabled(false);
+                mainUI.save.setEnabled(false);
+            } else {
+                App.loginUI.setVisible(true);
+            }
         });
 
 

@@ -23,11 +23,11 @@ import java.util.Map;
  * Course: CS-622
  */
 public class App {
-    public static Color[] backgroundColors = new Color[]{Color.white,new Color(132,148,147), new Color(238,194,181),
-                                                                    new Color(151,138,147), new Color(235,219,204),
-                                                                    new Color(244,218,255),new Color(165,197,254),
-                                                                    new Color(192,222,232),new Color(81,192,209),
-                                                                    new Color(154,250,239),new Color(203,190,216)};
+    public static Color[] backgroundColors = new Color[]{Color.white, new Color(132, 148, 147), new Color(238, 194, 181),
+            new Color(151, 138, 147), new Color(235, 219, 204),
+            new Color(244, 218, 255), new Color(165, 197, 254),
+            new Color(192, 222, 232), new Color(81, 192, 209),
+            new Color(154, 250, 239), new Color(203, 190, 216)};
     public static String photosLocation = "src" + File.separator + "image" + File.separator + "photos" + File.separator;
     public static String iconsLocation = "src" + File.separator + "image" + File.separator;
     public static User currentUser = null;
@@ -48,6 +48,7 @@ public class App {
     private final static GetDataThread getDataThread = new GetDataThread();
 
     public static void main(String[] args) {
+
         try {
             getDataThread.start();
             synchronized (getDataThread) {

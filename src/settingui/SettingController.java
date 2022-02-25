@@ -11,8 +11,6 @@ import users.User;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,93 +31,81 @@ public class SettingController {
     public static void setController(SettingUI settingUI) {
         setActionForButtonGroup(App.currentUser, settingUI);
         //////////////////////////////////////////////////////////
-        settingUI.leftSize.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        settingUI.leftSize.addActionListener(e -> {
 
-                int currentSize = Integer.parseInt(settingUI.sizeLabel.getText());
-                if (currentSize > App.minGameSize) {
-                    int nextSize = currentSize - 1;
-                    settingUI.sizeLabel.setText(nextSize + "");
-                    App.currentUser.gameSize = nextSize;
-                    updateMainInterface();
-                    if (nextSize == App.minGameSize) {
-                        OptionPane.setJOptionPaneMessage(App.mainUI, "Not standard mode. Can't save record", "Message", null);
-                        App.ifStandardMode = false;
-                        settingUI.leftSize.setEnabled(false);
-                    } else {
-                        App.ifStandardMode = true;
-                    }
-                    if (nextSize == App.maxGameSize - 1) {
-                        settingUI.rightSize.setEnabled(true);
-                    }
+            int currentSize = Integer.parseInt(settingUI.sizeLabel.getText());
+            if (currentSize > App.minGameSize) {
+                int nextSize = currentSize - 1;
+                settingUI.sizeLabel.setText(nextSize + "");
+                App.currentUser.gameSize = nextSize;
+                updateMainInterface();
+                if (nextSize == App.minGameSize) {
+                    OptionPane.setJOptionPaneMessage(App.mainUI, "Not standard mode. Can't save record", "Message", null);
+                    App.ifStandardMode = false;
+                    settingUI.leftSize.setEnabled(false);
+                } else {
+                    App.ifStandardMode = true;
                 }
-
+                if (nextSize == App.maxGameSize - 1) {
+                    settingUI.rightSize.setEnabled(true);
+                }
             }
+
         });
 
-        settingUI.rightSize.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int currentSize = Integer.parseInt(settingUI.sizeLabel.getText());
-                if (currentSize < App.maxGameSize) {
-                    int nextSize = currentSize + 1;
-                    settingUI.sizeLabel.setText(nextSize + "");
-                    App.currentUser.gameSize = nextSize;
-                    updateMainInterface();
-                    if (nextSize == App.maxGameSize) {
-                        OptionPane.setJOptionPaneMessage(App.mainUI, "Not standard mode. Can't save record", "Message", null);
-                        App.ifStandardMode = false;
-                        settingUI.rightSize.setEnabled(false);
-                    } else {
-                        App.ifStandardMode = true;
-                    }
+        settingUI.rightSize.addActionListener(e -> {
+            int currentSize = Integer.parseInt(settingUI.sizeLabel.getText());
+            if (currentSize < App.maxGameSize) {
+                int nextSize = currentSize + 1;
+                settingUI.sizeLabel.setText(nextSize + "");
+                App.currentUser.gameSize = nextSize;
+                updateMainInterface();
+                if (nextSize == App.maxGameSize) {
+                    OptionPane.setJOptionPaneMessage(App.mainUI, "Not standard mode. Can't save record", "Message", null);
+                    App.ifStandardMode = false;
+                    settingUI.rightSize.setEnabled(false);
+                } else {
+                    App.ifStandardMode = true;
+                }
 
-                    if (nextSize == App.minGameSize + 1) {
-                        settingUI.leftSize.setEnabled(true);
-                    }
+                if (nextSize == App.minGameSize + 1) {
+                    settingUI.leftSize.setEnabled(true);
                 }
             }
         });
 
-        settingUI.leftColor.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (currentColorNum > 0) {
-                    currentColorNum--;
-                    settingUI.colorLabel.setBackground(App.backgroundColors[currentColorNum]);
-                    updateBackground(App.backgroundColors[currentColorNum]);
-                    App.currentUser.backgroundColor = currentColorNum;
-                    if (currentColorNum == App.backgroundColors.length - 2) {
-                        settingUI.rightColor.setEnabled(true);
-                    }
+        settingUI.leftColor.addActionListener(e -> {
+            if (currentColorNum > 0) {
+                currentColorNum--;
+                settingUI.colorLabel.setBackground(App.backgroundColors[currentColorNum]);
+                updateBackground(App.backgroundColors[currentColorNum]);
+                App.currentUser.backgroundColor = currentColorNum;
+                if (currentColorNum == App.backgroundColors.length - 2) {
+                    settingUI.rightColor.setEnabled(true);
                 }
-                if (currentColorNum == 0) {
-                    settingUI.colorLabel.setBackground(App.backgroundColors[0]);
-                    updateBackground(App.backgroundColors[currentColorNum]);
-                    App.currentUser.backgroundColor = currentColorNum;
-                    settingUI.leftColor.setEnabled(false);
-                }
-
-
             }
+            if (currentColorNum == 0) {
+                settingUI.colorLabel.setBackground(App.backgroundColors[0]);
+                updateBackground(App.backgroundColors[currentColorNum]);
+                App.currentUser.backgroundColor = currentColorNum;
+                settingUI.leftColor.setEnabled(false);
+            }
+
+
         });
 
 
-        settingUI.rightColor.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (currentColorNum < App.backgroundColors.length - 1) {
-                    currentColorNum++;
-                    settingUI.colorLabel.setBackground(App.backgroundColors[currentColorNum]);
-                    updateBackground(App.backgroundColors[currentColorNum]);
-                    App.currentUser.backgroundColor = currentColorNum;
-                    if (currentColorNum == App.backgroundColors.length - 1) {
-                        settingUI.rightColor.setEnabled(false);
-                    }
-                    if (currentColorNum == 1) {
-                        settingUI.leftColor.setEnabled(true);
-                    }
+        settingUI.rightColor.addActionListener(e -> {
+            if (currentColorNum < App.backgroundColors.length - 1) {
+                currentColorNum++;
+                settingUI.colorLabel.setBackground(App.backgroundColors[currentColorNum]);
+                updateBackground(App.backgroundColors[currentColorNum]);
+                App.currentUser.backgroundColor = currentColorNum;
+                if (currentColorNum == App.backgroundColors.length - 1) {
+                    settingUI.rightColor.setEnabled(false);
+                }
+                if (currentColorNum == 1) {
+                    settingUI.leftColor.setEnabled(true);
                 }
             }
         });
@@ -155,20 +141,17 @@ public class SettingController {
         for (int i = 0; i < settingUI.jRadioButtonList.size(); i++) {
             for (JRadioButton jRadioButton : settingUI.jRadioButtonList.get(i)) {
                 int finalI = i;
-                jRadioButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        String current = user.photoRecordLayout[finalI];
-                        String result = clickWhich(settingUI.jRadioButtonList.get(finalI));
-                        for (int j = 0; j < user.photoRecordLayout.length; j++) {
-                            if (user.photoRecordLayout[j].equals(result)) {
-                                user.photoRecordLayout[j] = current;
-                                user.photoRecordLayout[finalI] = result;
-                            }
+                jRadioButton.addActionListener(e -> {
+                    String current = user.photoRecordLayout[finalI];
+                    String result = clickWhich(settingUI.jRadioButtonList.get(finalI));
+                    for (int j = 0; j < user.photoRecordLayout.length; j++) {
+                        if (user.photoRecordLayout[j].equals(result)) {
+                            user.photoRecordLayout[j] = current;
+                            user.photoRecordLayout[finalI] = result;
                         }
-                        selectWhich(user, settingUI.jRadioButtonList);
-                        updateMainTop(App.mainUI, user);
                     }
+                    selectWhich(user, settingUI.jRadioButtonList);
+                    updateMainTop(App.mainUI, user);
                 });
             }
         }
@@ -207,22 +190,28 @@ public class SettingController {
         mainUI.recordPane.remove(mainUI.timerAndPhotoPane);
         mainUI.recordPane.remove(mainUI.bestRecordOutPane);
         mainUI.recordPane.remove(mainUI.lastRecordOutPane);
-        List<JPanel> jPanelList = new ArrayList<>();
-        jPanelList.add(mainUI.timerAndPhotoPane);
-        jPanelList.add(mainUI.bestRecordOutPane);
-        jPanelList.add(mainUI.lastRecordOutPane);
+        List<JPanel> jPanelList = new ArrayList<>() {{
+            add(mainUI.timerAndPhotoPane);
+            add(mainUI.bestRecordOutPane);
+            add(mainUI.lastRecordOutPane);
+        }};
 
-        JPanel[] jPanels = new JPanel[3];
-        for (int i = 0; i < user.photoRecordLayout.length; i++) {
-            switch (user.photoRecordLayout[i]) {
-                case "left" -> jPanels[0] = jPanelList.get(i);
-                case "center" -> jPanels[1] = jPanelList.get(i);
-                case "right" -> jPanels[2] = jPanelList.get(i);
+
+        NewCompListSortByLocation<List<JPanel>> newCompListSortByLocation = (oldJPanelList, currentUser) -> {
+            List<JPanel> newJPanelList = new ArrayList<>(oldJPanelList);
+            for (int i = 0; i < currentUser.photoRecordLayout.length; i++) {
+                switch (currentUser.photoRecordLayout[i]) {
+                    case "left" -> newJPanelList.set(0, oldJPanelList.get(i));
+                    case "center" -> newJPanelList.set(1, oldJPanelList.get(i));
+                    case "right" -> newJPanelList.set(2, oldJPanelList.get(i));
+                }
             }
-        }
-        for (JPanel p : jPanels) {
-            mainUI.recordPane.add(p);
-        }
+            return newJPanelList;
+        };
+
+        // lambda for loop
+        newCompListSortByLocation.getNewComponentList(jPanelList, user).forEach(p -> mainUI.recordPane.add(p));
+
         mainUI.recordPane.updateUI();
     }
 

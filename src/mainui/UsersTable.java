@@ -1,6 +1,7 @@
 package mainui;
 
 import game2048_test.App;
+import tool.KeyBoardListener;
 import users.RegisteredUser;
 import users.User;
 
@@ -77,25 +78,22 @@ public class UsersTable extends JTable {
 
         this.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.setSelectionBackground(new Color(184, 207, 229));
+
+        KeyBoardListener<UsersTable> keyBoardListener = new KeyBoardListener<>(this);
+        keyBoardListener.setListener();
     }
 
     /**
      * purpose of this method is to deal with the data needed by the table
      */
     private String[][] dealWithData(Map<String, User> usersData) {
-        // create a Comparator for sorting the data by users' taken timer
-        Comparator<Map.Entry<String, User>> comparator = new Comparator<Map.Entry<String, User>>() {
-            @Override
-            public int compare(Map.Entry<String, User> o1, Map.Entry<String, User> o2) {
-                return ((RegisteredUser) o1.getValue()).bestTakeTime - ((RegisteredUser) o2.getValue()).bestTakeTime;
-            }
-        };
         // use stream() to sort the userdata (Map<String, User>) and return a new Map
         Map<String, User> newUsersData = usersData.entrySet()
-                .stream().sorted(comparator)
+                .stream()
+                .sorted(Comparator.comparingInt(o -> ((RegisteredUser) o.getValue()).bestTakeTime))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (c1, c2) -> c1, LinkedHashMap::new));
 
-        // Get a array for the table
+        // Get an array for the table
         String[][] data = new String[newUsersData.size()][title.length];
         int index = 0;
         for (String username : newUsersData.keySet()) {

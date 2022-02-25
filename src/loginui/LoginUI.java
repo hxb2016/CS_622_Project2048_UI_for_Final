@@ -1,6 +1,10 @@
 package loginui;
 
 import game2048_test.App;
+import tool.PasswordField;
+import tool.RectangleButton;
+import tool.TextButton;
+import tool.TextFieldForGame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,34 +20,34 @@ import java.io.File;
  * Course: CS-622
  */
 public class LoginUI extends JDialog {
-    public JTextField userNameBox;
+    public TextFieldForGame userNameBox;
     public JPasswordField passwordBox;
     public JLabel ageTitle;
-    public JTextField ageBox;
+    public TextFieldForGame ageBox;
     public JLabel genderTitle;
-    public JTextField genderBox;
-    public LoginUIButton signIn;
-    public LoginUIButton signUp;
-    public LoginUIButton cancelSignUp;
-    public LoginUIButton creatAccount;
-    public LoginUIButton startAsGuest;
+    public TextFieldForGame genderBox;
+    public RectangleButton signIn;
+    public RectangleButton signUp;
+    public RectangleButton cancelSignUp;
+    public TextButton creatAccount;
+    public TextButton startAsGuest;
     public JPanel signInAndUp;
     public JPanel informationArea;
     private static LoginUI loginUI = null;
 
     private LoginUI(Frame owner) {
         super(owner);
-        this.setResizable(false);
-        this.setTitle("login");
+        setResizable(false);
+        setTitle("login");
         ImageIcon logo = new ImageIcon("src" + File.separator + "image" + File.separator + "2048.png");
-        this.setIconImage(logo.getImage());
-        this.setLayout(new BorderLayout());
-        this.setSize(300, 400); // 设置大小
-        this.setLocationRelativeTo(null); // 相对屏幕居中
-        this.setModal(true);
-        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setIconImage(logo.getImage());
+        setLayout(new BorderLayout());
+        setSize(300, 400); // 设置大小
+        setLocationRelativeTo(null); // 相对屏幕居中
+        setModal(true);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-        this.addWindowListener(new WindowAdapter() {
+        addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 if (!App.ifEnd) {// If you have not started the game, the game will quit when you close the login pane.
@@ -54,49 +58,49 @@ public class LoginUI extends JDialog {
 
         //////////////////////////information area////////////////////////////////
         //this area includes username, password, age, gender, creatAccount and startAsGuest components
-        this.informationArea = new JPanel();
+        informationArea = new JPanel();
 
-        JLabel userNameTitle = new LoginUILabel("User name:", SwingConstants.CENTER);
-        this.userNameBox = new LoginUITextField();
+        JLabel userNameTitle = new LoginUILabel(this,"User name:", SwingConstants.CENTER);
+        userNameBox = LoginUITextField.getLoginUITextField();
 
-        JLabel passwordTitle = new LoginUILabel("Password:", SwingConstants.CENTER);
-        this.passwordBox = new JPasswordField();
-        this.passwordBox.setPreferredSize(new Dimension(200, 30));
+        JLabel passwordTitle = new LoginUILabel(this,"Password:", SwingConstants.CENTER);
+        passwordBox = PasswordField.getPasswordField(null);
+        passwordBox.setPreferredSize(new Dimension(200, 30));
 
-        this.creatAccount = new LoginUIButton("Creat Account");
-        this.startAsGuest = new LoginUIButton("Start as Guest");
+        creatAccount = new TextButtonForLoginUI("Creat Account");
+        startAsGuest = new TextButtonForLoginUI("Start as Guest");
 
-        this.ageTitle = new LoginUILabel("Age:", SwingConstants.CENTER);
-        this.ageBox = new LoginUITextField();
+        ageTitle = new LoginUILabel(this,"Age:", SwingConstants.CENTER);
+        ageBox = LoginUITextField.getLoginUITextField();
 
-        this.genderTitle = new LoginUILabel("Gender:", SwingConstants.CENTER);
-        this.genderBox = new LoginUITextField();
+        genderTitle = new LoginUILabel(this,"Gender:", SwingConstants.CENTER);
+        genderBox = LoginUITextField.getLoginUITextField();
 
 
-        this.informationArea.add(userNameTitle);
-        this.informationArea.add(this.userNameBox);
-        this.informationArea.add(passwordTitle);
-        this.informationArea.add(this.passwordBox);
-        this.informationArea.add(this.creatAccount);
-        this.informationArea.add(this.startAsGuest);
+        informationArea.add(userNameTitle);
+        informationArea.add(userNameBox);
+        informationArea.add(passwordTitle);
+        informationArea.add(passwordBox);
+        informationArea.add(creatAccount);
+        informationArea.add(startAsGuest);
         //////////////////////////information area end////////////////////////////
 
-        this.signInAndUp = new JPanel();
-        this.signInAndUp.setLayout(new GridLayout(1, 2));
-        this.signInAndUp.setSize(this.getWidth(), 50);
+        signInAndUp = new JPanel();
+        signInAndUp.setLayout(new GridLayout(1, 2));
+        signInAndUp.setSize(getWidth(), 50);
 
-        this.signIn = new LoginUIButton("Sign in");// sign in button
-        this.signInAndUp.add(this.signIn, BorderLayout.CENTER);
+        signIn = new RectangleButtonForLogin("Sign in",null);// sign in button
+        signInAndUp.add(signIn, BorderLayout.CENTER);
 
-        this.signUp = new LoginUIButton("Sign up");// sign up button
-        this.cancelSignUp = new LoginUIButton("Cancel");
+        signUp = new RectangleButtonForLogin("Sign up",null);// sign up button
+        cancelSignUp = new RectangleButtonForLogin("Cancel",null);
 
-        this.add(this.signInAndUp, BorderLayout.SOUTH);
-        this.add(this.informationArea, BorderLayout.CENTER);
+        add(signInAndUp, BorderLayout.SOUTH);
+        add(informationArea, BorderLayout.CENTER);
     }
 
     /**
-     * purpose of this method is to return a single loginUI
+     * purpose of this method is to return a loginUI object and make sure that just only one loginUI object exist in the system
      */
     public static LoginUI getLoginUI(Frame owner) {
         if (loginUI == null) {

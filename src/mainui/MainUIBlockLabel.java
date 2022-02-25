@@ -33,10 +33,10 @@ public class MainUIBlockLabel extends JLabel {
 
     public MainUIBlockLabel(int roundSize, int textSize) {
         this.roundSize = roundSize;
-        this.setHorizontalAlignment(CENTER);
-        this.setOpaque(true);
-        this.setForeground(numberColor1);
-        this.setFont(new Font("Times New Roman", Font.BOLD, textSize));
+        setHorizontalAlignment(CENTER);
+        setOpaque(true);
+        setForeground(numberColor1);
+        setFont(new Font("Times New Roman", Font.BOLD, textSize));
 
         KeyBoardListener<MainUIBlockLabel> keyBoardListener = new KeyBoardListener<>(this);
         keyBoardListener.setListener();
@@ -52,54 +52,54 @@ public class MainUIBlockLabel extends JLabel {
      * purpose of this method is to set background and text color basis the number of the label
      */
     public void setColor() {
-        int blockNum = this.getText().equals("") ? 0 : Integer.parseInt(this.getText());
+        int blockNum = getText().equals("") ? 0 : Integer.parseInt(getText());
         switch (blockNum) {
             case 2 -> {
-                this.setBackground(color2);
-                this.setForeground(numberColor1);
+                setBackground(color2);
+                setForeground(numberColor1);
             }
             case 4 -> {
-                this.setBackground(color4);
-                this.setForeground(numberColor1);
+                setBackground(color4);
+                setForeground(numberColor1);
             }
             case 8 -> {
-                this.setBackground(color8);
-                this.setForeground(numberColor1);
+                setBackground(color8);
+                setForeground(numberColor1);
             }
             case 16 -> {
-                this.setBackground(color16);
-                this.setForeground(numberColor2);
+                setBackground(color16);
+                setForeground(numberColor2);
             }
             case 32 -> {
-                this.setBackground(color32);
-                this.setForeground(numberColor2);
+                setBackground(color32);
+                setForeground(numberColor2);
             }
             case 64 -> {
-                this.setBackground(color64);
-                this.setForeground(numberColor2);
+                setBackground(color64);
+                setForeground(numberColor2);
             }
             case 128 -> {
-                this.setBackground(color128);
-                this.setForeground(numberColor2);
+                setBackground(color128);
+                setForeground(numberColor2);
             }
             case 256 -> {
-                this.setBackground(color256);
-                this.setForeground(numberColor2);
+                setBackground(color256);
+                setForeground(numberColor2);
             }
             case 512 -> {
-                this.setBackground(color512);
-                this.setForeground(numberColor2);
+                setBackground(color512);
+                setForeground(numberColor2);
             }
             case 1024 -> {
-                this.setBackground(color1024);
-                this.setForeground(numberColor2);
+                setBackground(color1024);
+                setForeground(numberColor2);
             }
             case 2048 -> {
-                this.setBackground(color2048);
-                this.setForeground(numberColor2);
+                setBackground(color2048);
+                setForeground(numberColor2);
             }
             default -> {
-                this.setBackground(new Color(205, 193, 180));
+                setBackground(new Color(205, 193, 180));
             }
         }
     }

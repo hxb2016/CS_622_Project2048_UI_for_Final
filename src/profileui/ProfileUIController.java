@@ -10,8 +10,6 @@ import users.UnRegisteredUser;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -81,133 +79,117 @@ public class ProfileUIController {
         });
 
         // set action listener for username edit button
-        profileUIContent.editButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (profileUIContent.editButton.getText().equals("Edit Profile")) {
-                    profileUIContent.editButton.setText("Confirm");
+        profileUIContent.editButton.addActionListener(e -> {
 
-                    profileUIContent.username.setEditable(true);
-                    profileUIContent.password.setEditable(true);
-                    profileUIContent.age.setEditable(true);
-                    profileUIContent.gender.setEditable(true);
-                    profileUIContent.introduction.setEditable(true);
+            if (profileUIContent.editButton.getText().equals("Edit Profile")) {
+                profileUIContent.editButton.setText("Confirm");
+
+                profileUIContent.username.setEditable(true);
+                profileUIContent.password.setEditable(true);
+                profileUIContent.age.setEditable(true);
+                profileUIContent.gender.setEditable(true);
+                profileUIContent.introduction.setEditable(true);
+            } else {
+                if (profileUIContent.username.getText().trim().equals("") || profileUIContent.password.getPassword().length == 0) {
+                    OptionPane.setJOptionPaneMessage(App.mainUI, "Username and password can't be empty", "Message", null);
                 } else {
-                    if (profileUIContent.username.getText().trim().equals("") || profileUIContent.password.getPassword().length == 0) {
-                        OptionPane.setJOptionPaneMessage(App.mainUI, "Username and password can't be empty", "Message", null);
-                    } else {
-                        App.usersData.remove(App.currentUser.username);
-                        App.currentUser.username = profileUIContent.username.getText();
-                        App.currentUser.password = profileUIContent.password.getPassword();
-                        App.currentUser.age = Integer.parseInt(profileUIContent.age.getText().trim());
-                        App.currentUser.gender = profileUIContent.gender.getText();
-                        App.currentUser.introduce = profileUIContent.introduction.getText();
-                        App.usersData.put(App.currentUser.username, App.currentUser);
-                        try {
-                            // Save user data
-                            SaveUsersData.saveUsersData(App.usersData, App.userDataPath);
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-                        }
-                        profileUIContent.editButton.setText("Edit Profile");
-                        profileUIContent.username.setEditable(false);
-                        profileUIContent.password.setEditable(false);
-                        profileUIContent.age.setEditable(false);
-                        profileUIContent.gender.setEditable(false);
-                        profileUIContent.introduction.setEditable(false);
-
-                        // Update profileUIContent username
-                        profileUIContent.profilePhoto.username.setText(App.currentUser.username);
-                        // Update mainUI username
-                        App.mainUI.profilePhoto.setUsername(App.currentUser.username);
-                        // Update user table
-                        App.mainUI.usersScrollPane.updateUsersTable();
+                    App.usersData.remove(App.currentUser.username);
+                    App.currentUser.username = profileUIContent.username.getText();
+                    App.currentUser.password = profileUIContent.password.getPassword();
+                    App.currentUser.age = Integer.parseInt(profileUIContent.age.getText().trim());
+                    App.currentUser.gender = profileUIContent.gender.getText();
+                    App.currentUser.introduce = profileUIContent.introduction.getText();
+                    App.usersData.put(App.currentUser.username, App.currentUser);
+                    try {
+                        // Save user data
+                        SaveUsersData.saveUsersData(App.usersData, App.userDataPath);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
                     }
+                    profileUIContent.editButton.setText("Edit Profile");
+                    profileUIContent.username.setEditable(false);
+                    profileUIContent.password.setEditable(false);
+                    profileUIContent.age.setEditable(false);
+                    profileUIContent.gender.setEditable(false);
+                    profileUIContent.introduction.setEditable(false);
 
-
+                    // Update profileUIContent username
+                    profileUIContent.profilePhoto.username.setText(App.currentUser.username);
+                    // Update mainUI username
+                    App.mainUI.profilePhoto.setUsername(App.currentUser.username);
+                    // Update user table
+                    App.mainUI.usersScrollPane.updateUsersTable();
                 }
-
             }
 
         });
 
         // set action listener for quit account button
-        profileUIContent.quitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int option = OptionPane.setJOptionPaneConfirm(App.mainUI, "Quit?", "Message");
-                if (option == JOptionPane.YES_OPTION) {
-                    try {
-                        Thread handleData = new Thread() {
-                            @Override
-                            public void run() {
-                                try {
-                                    SaveUsersData.saveUsersData(App.usersData, App.userDataPath);
-                                    App.currentUser = new UnRegisteredUser();
+        profileUIContent.quitButton.addActionListener(e -> {
+            int option = OptionPane.setJOptionPaneConfirm(App.mainUI, "Quit?", "Message");
+            if (option == JOptionPane.YES_OPTION) {
+                try {
+                    Thread handleData = new Thread(() -> {
+                        try {
+                            SaveUsersData.saveUsersData(App.usersData, App.userDataPath);
+                            App.currentUser = new UnRegisteredUser();
 
-                                    // Update user table
-                                    App.mainUI.usersScrollPane.updateUsersTable();
+                            // Update user table
+                            App.mainUI.usersScrollPane.updateUsersTable();
 
-                                    CreateBlockArrayData.creatBlockArrayData(App.currentUser);
-                                    MainUIBlocksArrayPaneUpdate.updateUI(App.mainUI.blocksArray, App.currentUser.currentBlocksArrayData, App.mainUI.blocksArrayPane);
-                                } catch (IOException ex) {
-                                    ex.printStackTrace();
-                                }
+                            CreateBlockArrayData.creatBlockArrayData(App.currentUser);
+                            MainUIBlocksArrayPaneUpdate.updateUI(App.mainUI.blocksArray, App.currentUser.currentBlocksArrayData, App.mainUI.blocksArrayPane);
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
 
-                            }
-                        };
+                    });
 
-                        InitGame initGame = new InitGame();
-                        handleData.start();
-                        initGame.start();
-                        handleData.join();
-                        initGame.join();
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
+                    InitGame initGame = new InitGame();
+                    handleData.start();
+                    initGame.start();
+
+                    handleData.join();
+                    initGame.join();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             }
         });
 
 
         // set action listener for delete account button
-        profileUIContent.delButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int option = OptionPane.setJOptionPaneConfirm(App.mainUI, "Delete your account?", "Message");
-                if (option == JOptionPane.YES_OPTION) {
-                    try {
-                        Thread handleData = new Thread() {
-                            @Override
-                            public void run() {
-                                try {
-                                    App.usersData.remove(App.currentUser.username);
-                                    SaveUsersData.saveUsersData(App.usersData, App.userDataPath);
+        profileUIContent.delButton.addActionListener(e -> {
+            int option = OptionPane.setJOptionPaneConfirm(App.mainUI, "Delete your account?", "Message");
+            if (option == JOptionPane.YES_OPTION) {
+                try {
+                    Thread handleData = new Thread(() -> {
+                        try {
+                            App.usersData.remove(App.currentUser.username);
+                            SaveUsersData.saveUsersData(App.usersData, App.userDataPath);
 
-                                    App.currentUser = new UnRegisteredUser();
+                            App.currentUser = new UnRegisteredUser();
 
-                                    // Update user table
-                                    App.mainUI.usersScrollPane.updateUsersTable();
-                                    // Update champion panel
-                                    App.mainUI.ChampionPanel.setUserToPanel(App.mainUI.usersScrollPane.usersTable.champion);
+                            // Update user table
+                            App.mainUI.usersScrollPane.updateUsersTable();
+                            // Update champion panel
+                            App.mainUI.ChampionPanel.setUserToPanel(App.mainUI.usersScrollPane.usersTable.champion);
 
-                                    CreateBlockArrayData.creatBlockArrayData(App.currentUser);
-                                    MainUIBlocksArrayPaneUpdate.updateUI(App.mainUI.blocksArray, App.currentUser.currentBlocksArrayData, App.mainUI.blocksArrayPane);
-                                } catch (IOException ex) {
-                                    ex.printStackTrace();
-                                }
+                            CreateBlockArrayData.creatBlockArrayData(App.currentUser);
+                            MainUIBlocksArrayPaneUpdate.updateUI(App.mainUI.blocksArray, App.currentUser.currentBlocksArrayData, App.mainUI.blocksArrayPane);
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
 
-                            }
-                        };
+                    });
 
-                        InitGame initGame = new InitGame();
-                        handleData.start();
-                        initGame.start();
-                        handleData.join();
-                        initGame.join();
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
+                    InitGame initGame = new InitGame();
+                    handleData.start();
+                    initGame.start();
+                    handleData.join();
+                    initGame.join();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             }
         });

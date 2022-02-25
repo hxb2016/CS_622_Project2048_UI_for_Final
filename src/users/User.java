@@ -1,9 +1,7 @@
 package users;
 
 import block.Block;
-import game2048_test.App;
 
-import java.awt.*;
 import java.io.Serializable;
 
 /**

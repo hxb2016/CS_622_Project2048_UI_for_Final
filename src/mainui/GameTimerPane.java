@@ -1,6 +1,8 @@
 package mainui;
 
 import game2048_test.App;
+import profileui.TextButtonForProfile;
+import tool.MouseListenerForChangeColor;
 import tool.UpdateTimerPane;
 
 import javax.swing.*;
@@ -24,11 +26,12 @@ public class GameTimerPane extends JPanel {
         timerPane.setOpaque(false);
         timerPane.setLayout(new BorderLayout());
 
-        this.second.setFont(new Font("Times New Roman", Font.BOLD, 30));
+        second.setFont(new Font("Times New Roman", Font.BOLD, 30));
 
-        timerPane.add(this.second, BorderLayout.CENTER);
+        timerPane.add(second, BorderLayout.CENTER);
 
-        this.add(timerPane);
+        add(timerPane);
+
     }
     /**
      * Purpose of this method is to set the number into timer pane
@@ -42,15 +45,15 @@ public class GameTimerPane extends JPanel {
      */
     public void timerHideOrShow() {
         if (timerHideOrShow) {
-            this.second.setText("");
-            this.second.setIcon(timerImage);
+            second.setText("");
+            second.setIcon(timerImage);
         } else {
             if(App.ifEnd){
-                this.second.setText(App.currentUser.currentTakeTime + " s");
+                second.setText(App.currentUser.currentTakeTime + " s");
             }else{
-                this.second.setText(UpdateTimerPane.second + " s");
+                second.setText(UpdateTimerPane.second + " s");
             }
-            this.second.setIcon(null);
+            second.setIcon(null);
         }
         timerHideOrShow = !timerHideOrShow;
     }

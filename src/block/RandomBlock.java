@@ -24,8 +24,8 @@ public class RandomBlock extends Block {
         // Get a random location from enableLocations
         int[] randomLocation = enableLocations.get(random.nextInt(enableLocations.size()));
 
-        this.number = randomNum;
-        this.location = randomLocation;
+        number = randomNum;
+        location = randomLocation;
     }
 
 }

@@ -14,8 +14,8 @@ import java.util.Map;
  * Course: CS-622
  */
 public class UsersScrollPane extends JScrollPane {
-    public UsersTable usersTable = null;
-    private Map<String, User> usersData = null;
+    public UsersTable usersTable;
+    private final Map<String, User> usersData;
 
     private static UsersScrollPane usersScrollPane = null;
 

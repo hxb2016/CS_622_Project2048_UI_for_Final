@@ -9,11 +9,13 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * purpose of this class is to create a SettingUI interface
- *
+ * <p>
  * Author: Xiaobing Hou
  * Date: 02/27/2022
  * Course: CS-622
@@ -46,8 +48,7 @@ public class SettingUI extends JDialog {
             public void windowClosing(WindowEvent e) {
                 try {
                     SaveUsersData.saveUsersData(App.usersData, App.userDataPath);
-                } catch (Exception ex) {
-                    System.out.println("Error happened when save data.");
+                } catch (IOException ex) {
                     ex.printStackTrace();
                 }
             }
@@ -106,7 +107,7 @@ public class SettingUI extends JDialog {
         colorLabel.setOpaque(true);
         colorLabel.setPreferredSize(new Dimension(45, 45));
         colorLabel.setBackground(Color.WHITE);
-        colorLabel.setBorder(new LineBorder(Color.BLACK,1));
+        colorLabel.setBorder(new LineBorder(Color.BLACK, 1));
 
         uiColor.add(uiColor_title);
         uiColor.add(leftColor);

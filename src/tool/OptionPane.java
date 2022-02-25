@@ -30,11 +30,10 @@ public class OptionPane {
         int userOption = -1;
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-
             userOption = JOptionPane.showConfirmDialog(f, content, title, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         } catch (Exception ex) {
+            userOption = JOptionPane.showConfirmDialog(f, content, title, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             ex.printStackTrace();
         }
         return userOption;

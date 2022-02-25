@@ -10,8 +10,6 @@ import mainui.MainUIBlocksArrayPaneUpdate;
 import users.RegisteredUser;
 import users.UnRegisteredUser;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -25,142 +23,126 @@ import java.util.Arrays;
 public class LoginUIController {
     public static void setController(LoginUI loginUI) {
         // Set controller for Sign in button
-        loginUI.signIn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String username = loginUI.userNameBox.getText().trim().equals("") ? " " : loginUI.userNameBox.getText();
-                //If username in the local data, the user is a registered user
-                if (App.usersData != null && App.usersData.containsKey(username)) {
-                    //Judge that if the password is right
-                    if (Arrays.equals(loginUI.passwordBox.getPassword(), App.usersData.get(username).password)) {
-                        // If the game has been ended
-                        if (!App.ifEnd) {
-                            App.currentUser = App.usersData.get(username);
+        loginUI.signIn.addActionListener(e -> {
+            String username = loginUI.userNameBox.getText().trim().equals("") ? " " : loginUI.userNameBox.getText();
+            //If username in the local data, the user is a registered user
+            if (App.usersData != null && App.usersData.containsKey(username)) {
+                //Judge that if the password is right
+                if (Arrays.equals(loginUI.passwordBox.getPassword(), App.usersData.get(username).password)) {
+                    // If the game has been ended
+                    if (!App.ifEnd) {
+                        App.currentUser = App.usersData.get(username);
 
-                            SettingController.updateMainInterface();
-                            SettingController.updateBackground(App.backgroundColors[App.currentUser.backgroundColor]);
-                            SettingController.updateMainTop(App.mainUI, App.currentUser);
-                            if (App.currentUser.gameSize != App.defaultGameSize) {
-                                App.ifStandardMode = false;
-                            }
-                        } else {
-                            RegisteredUser newCurrentUser = (RegisteredUser) (App.usersData.get(username));
-                            newCurrentUser.dataExchange(App.currentUser);
-                            newCurrentUser.setData();//set the data to prepare for saving
-                            App.usersData.put(newCurrentUser.username, newCurrentUser);
-                            App.currentUser = newCurrentUser;
-
-                            try {
-                                SaveUsersData.saveUsersData(App.usersData, App.userDataPath);
-                                OptionPane.setJOptionPaneMessage(App.mainUI, "Successfully Login and Save!", "Message", null);
-                                App.mainUI.save.setEnabled(false);
-
-                                if (App.currentUser.gameSize != App.defaultGameSize) {
-                                    SettingController.updateMainInterface();
-                                    App.ifStandardMode = false;
-                                }
-                                SettingController.updateMainTop(App.mainUI, App.currentUser);
-                                SettingController.updateBackground(App.backgroundColors[App.currentUser.backgroundColor]);
-                            } catch (Exception ex) {
-                                System.out.println("Error happened when save data.");
-                                ex.printStackTrace();
-                            }
-                        }
-                        loginUI.setVisible(false);
-
-                        //Update record panel
-                        if (((RegisteredUser) App.currentUser).lastBlocksArrayData != null) {
-                            App.mainUI.updateLastBestRecord(false);
-                        }
-
-                        //Update username panel
-                        App.mainUI.profilePhoto.setUsername(App.currentUser.username);
-
-                        //Update user table
-                        App.mainUI.usersScrollPane.updateUsersTable();
-
-                        //Update profile photo
-                        if (!((RegisteredUser) App.currentUser).photoName.equals("")) {
-                            ImageIconForPhoto photo = new ImageIconForPhoto(App.photosLocation + ((RegisteredUser) App.currentUser).photoName);
-                            App.mainUI.profilePhoto.roundLabel.setIcon(photo);
+                        SettingController.updateMainInterface();
+                        SettingController.updateBackground(App.backgroundColors[App.currentUser.backgroundColor]);
+                        SettingController.updateMainTop(App.mainUI, App.currentUser);
+                        if (App.currentUser.gameSize != App.defaultGameSize) {
+                            App.ifStandardMode = false;
                         }
                     } else {
-                        OptionPane.setJOptionPaneMessage(App.mainUI, "Wrong Password!", "Message", null);
+                        RegisteredUser newCurrentUser = (RegisteredUser) (App.usersData.get(username));
+                        newCurrentUser.dataExchange(App.currentUser);
+                        newCurrentUser.setData();//set the data to prepare for saving
+                        App.usersData.put(newCurrentUser.username, newCurrentUser);
+                        App.currentUser = newCurrentUser;
+
+                        try {
+                            SaveUsersData.saveUsersData(App.usersData, App.userDataPath);
+                            OptionPane.setJOptionPaneMessage(App.mainUI, "Successfully Login and Save!", "Message", null);
+                            App.mainUI.save.setEnabled(false);
+
+                            if (App.currentUser.gameSize != App.defaultGameSize) {
+                                SettingController.updateMainInterface();
+                                App.ifStandardMode = false;
+                            }
+                            SettingController.updateMainTop(App.mainUI, App.currentUser);
+                            SettingController.updateBackground(App.backgroundColors[App.currentUser.backgroundColor]);
+                        } catch (Exception ex) {
+                            System.out.println("Error happened when save data.");
+                            ex.printStackTrace();
+                        }
+                    }
+                    loginUI.setVisible(false);
+
+                    //Update record panel
+                    if (((RegisteredUser) App.currentUser).lastBlocksArrayData != null) {
+                        App.mainUI.updateLastBestRecord(false);
+                    }
+
+                    //Update username panel
+                    App.mainUI.profilePhoto.setUsername(App.currentUser.username);
+
+                    //Update user table
+                    App.mainUI.usersScrollPane.updateUsersTable();
+
+                    //Update profile photo
+                    if (!((RegisteredUser) App.currentUser).photoName.equals("")) {
+                        ImageIconForPhoto photo = new ImageIconForPhoto(App.photosLocation + ((RegisteredUser) App.currentUser).photoName);
+                        App.mainUI.profilePhoto.roundLabel.setIcon(photo);
                     }
                 } else {
-                    OptionPane.setJOptionPaneMessage(App.mainUI, "Sorry, you have no account!", "Message", null);
+                    OptionPane.setJOptionPaneMessage(App.mainUI, "Wrong Password!", "Message", null);
                 }
+            } else {
+                OptionPane.setJOptionPaneMessage(App.mainUI, "Sorry, you have no account!", "Message", null);
             }
         });
 
 
         // Set controller for signUp button
-        loginUI.signUp.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (App.ifEnd) {
-                    signUpAfterGame(loginUI);
-                } else {
-                    signUpBeforeGame(loginUI);
-                }
-                App.mainUI.usersScrollPane.updateUsersTable();
-                //Update username panel
-                App.mainUI.profilePhoto.setUsername(App.currentUser.username);
+        loginUI.signUp.addActionListener(e -> {
+            if (App.ifEnd) {
+                signUpAfterGame(loginUI);
+            } else {
+                signUpBeforeGame(loginUI);
             }
+            App.mainUI.usersScrollPane.updateUsersTable();
+            //Update username panel
+            App.mainUI.profilePhoto.setUsername(App.currentUser.username);
         });
 
         // Set controller for creatAccount button
-        loginUI.creatAccount.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loginUI.informationArea.remove(loginUI.creatAccount);
-                loginUI.informationArea.remove(loginUI.startAsGuest);
-                loginUI.informationArea.add(loginUI.ageTitle);
-                loginUI.informationArea.add(loginUI.ageBox);
-                loginUI.informationArea.add(loginUI.genderTitle);
-                loginUI.informationArea.add(loginUI.genderBox);
+        loginUI.creatAccount.addActionListener(e -> {
+            loginUI.informationArea.remove(loginUI.creatAccount);
+            loginUI.informationArea.remove(loginUI.startAsGuest);
+            loginUI.informationArea.add(loginUI.ageTitle);
+            loginUI.informationArea.add(loginUI.ageBox);
+            loginUI.informationArea.add(loginUI.genderTitle);
+            loginUI.informationArea.add(loginUI.genderBox);
 
-                loginUI.signInAndUp.remove(loginUI.signIn);
-                loginUI.signInAndUp.add(loginUI.signUp);
-                loginUI.signInAndUp.add(loginUI.cancelSignUp);
+            loginUI.signInAndUp.remove(loginUI.signIn);
+            loginUI.signInAndUp.add(loginUI.signUp);
+            loginUI.signInAndUp.add(loginUI.cancelSignUp);
 
-                loginUI.signInAndUp.updateUI();
-                loginUI.informationArea.updateUI();
-            }
+            loginUI.signInAndUp.updateUI();
+            loginUI.informationArea.updateUI();
         });
 
         // Set controller for cancelSignUp button
-        loginUI.cancelSignUp.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        loginUI.cancelSignUp.addActionListener(e -> {
 
-                loginUI.informationArea.remove(loginUI.ageTitle);
-                loginUI.informationArea.remove(loginUI.ageBox);
-                loginUI.informationArea.remove(loginUI.genderTitle);
-                loginUI.informationArea.remove(loginUI.genderBox);
-                loginUI.informationArea.add(loginUI.creatAccount);
-                loginUI.informationArea.add(loginUI.startAsGuest);
+            loginUI.informationArea.remove(loginUI.ageTitle);
+            loginUI.informationArea.remove(loginUI.ageBox);
+            loginUI.informationArea.remove(loginUI.genderTitle);
+            loginUI.informationArea.remove(loginUI.genderBox);
+            loginUI.informationArea.add(loginUI.creatAccount);
+            loginUI.informationArea.add(loginUI.startAsGuest);
 
-                loginUI.signInAndUp.remove(loginUI.signUp);
-                loginUI.signInAndUp.remove(loginUI.cancelSignUp);
-                loginUI.signInAndUp.add(loginUI.signIn);
+            loginUI.signInAndUp.remove(loginUI.signUp);
+            loginUI.signInAndUp.remove(loginUI.cancelSignUp);
+            loginUI.signInAndUp.add(loginUI.signIn);
 
-                loginUI.signInAndUp.updateUI();
-                loginUI.informationArea.updateUI();
-            }
+            loginUI.signInAndUp.updateUI();
+            loginUI.informationArea.updateUI();
         });
 
         // Set controller for startAsGuest button
-        loginUI.startAsGuest.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String username = loginUI.userNameBox.getText().trim().equals("") ? " " : loginUI.userNameBox.getText();
-                App.currentUser = new UnRegisteredUser();
+        loginUI.startAsGuest.addActionListener(e -> {
+            App.currentUser = new UnRegisteredUser();
 
-                CreateBlockArrayData.creatBlockArrayData(App.currentUser);
-                MainUIBlocksArrayPaneUpdate.updateUI(App.mainUI.blocksArray, App.currentUser.currentBlocksArrayData, App.mainUI.blocksArrayPane);
-                loginUI.setVisible(false);
-            }
+            CreateBlockArrayData.creatBlockArrayData(App.currentUser);
+            MainUIBlocksArrayPaneUpdate.updateUI(App.mainUI.blocksArray, App.currentUser.currentBlocksArrayData, App.mainUI.blocksArrayPane);
+            loginUI.setVisible(false);
         });
 
 

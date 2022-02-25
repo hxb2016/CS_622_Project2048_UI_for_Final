@@ -2,6 +2,7 @@ package mainui;
 
 import game2048_test.App;
 import profileui.ProfilePhoto;
+import tool.RectangleButton;
 import users.RegisteredUser;
 
 import javax.swing.*;
@@ -38,50 +39,47 @@ public class MainUI extends JFrame {
     public UsersScrollPane usersScrollPane = UsersScrollPane.getUsersScrollPane(App.usersData);
     public ChampionPanel ChampionPanel = new ChampionPanel();
 
-    public JButton up;
-    public JButton left;
-    public JButton down;
-    public JButton right;
-    public JButton newGame;
-    public JButton pause;
-    public JButton setting;
-    public JButton save;
+    public RectangleButton up;
+    public RectangleButton left;
+    public RectangleButton down;
+    public RectangleButton right;
+    public RectangleButton newGame;
+    public RectangleButton pause;
+    public RectangleButton setting;
+    public RectangleButton save;
 
     private static MainUI mainUI;
 
-    /**
-     * the purpose of this method is to init JFrame
-     */
     private MainUI() {
         ImageIcon logo = new ImageIcon(App.iconsLocation + "2048.png");//get logo image
-        this.setTitle("CS_622_Game_2048");
-        this.setIconImage(logo.getImage());//set logo image
-        this.setSize(720, 720);
-        this.setLocationRelativeTo(null);
-        this.setLayout(new BorderLayout());
-        this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        this.setResizable(false);
-        this.setAlwaysOnTop(true);
+        setTitle("CS_622_Game_2048");
+        setIconImage(logo.getImage());//set logo image
+        setSize(720, 720);
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        setResizable(false);
+        setAlwaysOnTop(true);
 
         recordPane = new JPanel();
         recordPane.setBorder(new EmptyBorder(0, 0, 10, 0));
         recordPane.setLayout(new GridLayout(1, 3, -20, 0));
-        recordPane.setPreferredSize(new Dimension(this.getWidth(), 220));
+        recordPane.setPreferredSize(new Dimension(getWidth(), 220));
 
 ////////////////////////////////////////////////////////////////////////////////////
         lastRecordOutPane = new JPanel();
         lastRecordOutPane.setLayout(new BorderLayout());
         lastRecordOutPane.setBorder(new EmptyBorder(0, 20, 0, 20));
         lastRecordOutPane.setOpaque(false);
-        lastRecordOutPane.add(this.lastTitleLabel, BorderLayout.NORTH);
-        lastRecordOutPane.add(this.lastRecord, BorderLayout.CENTER);
+        lastRecordOutPane.add(lastTitleLabel, BorderLayout.NORTH);
+        lastRecordOutPane.add(lastRecord, BorderLayout.CENTER);
 
         bestRecordOutPane = new JPanel();
         bestRecordOutPane.setLayout(new BorderLayout());
         bestRecordOutPane.setBorder(new EmptyBorder(0, 20, 0, 20));
         bestRecordOutPane.setOpaque(false);
-        bestRecordOutPane.add(this.bestTitleLabel, BorderLayout.NORTH);
-        bestRecordOutPane.add(this.bestRecord, BorderLayout.CENTER);
+        bestRecordOutPane.add(bestTitleLabel, BorderLayout.NORTH);
+        bestRecordOutPane.add(bestRecord, BorderLayout.CENTER);
 
         timerAndPhotoPane = new JPanel();
         timerAndPhotoPane.setOpaque(false);
@@ -91,18 +89,18 @@ public class MainUI extends JFrame {
         timerAndPhotoPane.add(profilePhoto, BorderLayout.CENTER);
         timerAndPhotoPane.add(timerPane, BorderLayout.SOUTH);
 //////////////////////////////////////////////////////////////////////////////////////////////
-        this.recordPane.add(timerAndPhotoPane);
-        this.recordPane.add(bestRecordOutPane);
-        this.recordPane.add(lastRecordOutPane);
+        recordPane.add(timerAndPhotoPane);
+        recordPane.add(bestRecordOutPane);
+        recordPane.add(lastRecordOutPane);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         buttonPane = new JPanel();
-        buttonPane.setPreferredSize(new Dimension(220, this.getHeight()));
+        buttonPane.setPreferredSize(new Dimension(220, getHeight()));
         buttonPane.setLayout(new BorderLayout());
 
-        newGame = new MainUIButton("New Game", null);
-        pause = new MainUIButton("Pause", null);
-        setting = new MainUIButton("Setting", null);
-        save = new MainUIButton("Save", null);
+        newGame = new RectangleButtonForMain("New Game", null);
+        pause = new RectangleButtonForMain("Pause", null);
+        setting = new RectangleButtonForMain("Setting", null);
+        save = new RectangleButtonForMain("Save", null);
         pause.setEnabled(false);
         save.setEnabled(false);
         JPanel newGamePauseMode = new JPanel();
@@ -121,18 +119,18 @@ public class MainUI extends JFrame {
         ImageIcon leftArrow = new ImageIcon(App.iconsLocation + "leftArrow.png");
         ImageIcon downArrow = new ImageIcon(App.iconsLocation + "downArrow.png");
         ImageIcon rightArrow = new ImageIcon(App.iconsLocation + "rightArrow.png");
-        this.up = new MainUIButton(null, upArrow);
+        up = new RectangleButtonForMain(null, upArrow);
         JPanel upPane = new JPanel();
         upPane.setOpaque(false);
-        upPane.add(this.up);
-        this.left = new MainUIButton(null, leftArrow);
-        this.down = new MainUIButton(null, downArrow);
-        this.right = new MainUIButton(null, rightArrow);
+        upPane.add(up);
+        left = new RectangleButtonForMain(null, leftArrow);
+        down = new RectangleButtonForMain(null, downArrow);
+        right = new RectangleButtonForMain(null, rightArrow);
         JPanel leftDownRightPane = new JPanel();
         leftDownRightPane.setOpaque(false);
-        leftDownRightPane.add(this.left);
-        leftDownRightPane.add(this.down);
-        leftDownRightPane.add(this.right);
+        leftDownRightPane.add(left);
+        leftDownRightPane.add(down);
+        leftDownRightPane.add(right);
         operationButtonArea.add(upPane);
         operationButtonArea.add(leftDownRightPane);
 
@@ -144,25 +142,25 @@ public class MainUI extends JFrame {
         userTableAndChampionPanel.add(ChampionPanel, BorderLayout.NORTH);
         userTableAndChampionPanel.add(usersScrollPane, BorderLayout.CENTER);
 
-        this.buttonPane.add(newGamePauseMode, BorderLayout.NORTH);
-        this.buttonPane.add(userTableAndChampionPanel, BorderLayout.CENTER);
-        this.buttonPane.add(operationButtonArea, BorderLayout.SOUTH);
+        buttonPane.add(newGamePauseMode, BorderLayout.NORTH);
+        buttonPane.add(userTableAndChampionPanel, BorderLayout.CENTER);
+        buttonPane.add(operationButtonArea, BorderLayout.SOUTH);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        blocksArrayPane_outPanel=new JPanel();
+        blocksArrayPane_outPanel = new JPanel();
         blocksArrayPane_outPanel.setLayout(new BorderLayout());
         blocksArrayPane = new MainUIBlocksArrayPane(blocksArray, 25, 5);
-        blocksArrayPane_outPanel.add(blocksArrayPane,BorderLayout.CENTER);
+        blocksArrayPane_outPanel.add(blocksArrayPane, BorderLayout.CENTER);
 
-        this.addWindowListener(new WindowAdapter() {
+        addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
             }
         });
-        this.add(this.blocksArrayPane_outPanel, BorderLayout.CENTER);
-        this.add(this.buttonPane, BorderLayout.EAST);
-        this.add(this.recordPane, BorderLayout.NORTH);
-        this.setVisible(true);//window is visible
+        add(blocksArrayPane_outPanel, BorderLayout.CENTER);
+        add(buttonPane, BorderLayout.EAST);
+        add(recordPane, BorderLayout.NORTH);
+        setVisible(true);//window is visible
     }
 
     /**
@@ -170,14 +168,14 @@ public class MainUI extends JFrame {
      */
     public void updateLastBestRecord(boolean ifInit) {
         if (!ifInit) {
-            MainUIBlocksArrayPaneUpdate.updateUI(this.lastBlockArray, ((RegisteredUser) App.currentUser).lastBlocksArrayData, this.lastRecord);
-            this.lastTitleLabel.setText("Last Record: Taken " + ((RegisteredUser) App.currentUser).lastTakeTime + " s");
+            MainUIBlocksArrayPaneUpdate.updateUI(lastBlockArray, ((RegisteredUser) App.currentUser).lastBlocksArrayData, lastRecord);
+            lastTitleLabel.setText("Last Record: Taken " + ((RegisteredUser) App.currentUser).lastTakeTime + " s");
 
-            MainUIBlocksArrayPaneUpdate.updateUI(this.bestBlockArray, ((RegisteredUser) App.currentUser).bestBlocksArrayData, this.bestRecord);
-            this.bestTitleLabel.setText("Best Record: Taken " + ((RegisteredUser) App.currentUser).bestTakeTime + " s");
+            MainUIBlocksArrayPaneUpdate.updateUI(bestBlockArray, ((RegisteredUser) App.currentUser).bestBlocksArrayData, bestRecord);
+            bestTitleLabel.setText("Best Record: Taken " + ((RegisteredUser) App.currentUser).bestTakeTime + " s");
         } else {
-            this.lastTitleLabel.setText("Last Record: Taken ... s");
-            this.bestTitleLabel.setText("Last Record: Taken ... s");
+            lastTitleLabel.setText("Last Record: Taken ... s");
+            bestTitleLabel.setText("Last Record: Taken ... s");
 
             lastRecordOutPane.remove(lastRecord);
             lastBlockArray = new MainUIBlockLabel[App.defaultGameSize][App.defaultGameSize];
