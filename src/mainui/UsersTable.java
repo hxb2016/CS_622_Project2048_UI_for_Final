@@ -38,16 +38,14 @@ public class UsersTable extends JTable {
         };
         this.setModel(model);
 
-        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel>(model);
-        sorter.setComparator(1, new Comparator<Object>() {
-            public int compare(Object arg0, Object arg1) {
-                try {
-                    int a = Integer.parseInt(arg0.toString());
-                    int b = Integer.parseInt(arg1.toString());
-                    return a - b;
-                } catch (NumberFormatException e) {
-                    return 0;
-                }
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        sorter.setComparator(1, (arg0, arg1) -> {
+            try {
+                int a = Integer.parseInt(arg0.toString());
+                int b = Integer.parseInt(arg1.toString());
+                return a - b;
+            } catch (NumberFormatException e) {
+                return 0;
             }
         });
 
@@ -79,8 +77,7 @@ public class UsersTable extends JTable {
         this.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.setSelectionBackground(new Color(184, 207, 229));
 
-        KeyBoardListener<UsersTable> keyBoardListener = new KeyBoardListener<>(this);
-        keyBoardListener.setListener();
+        new KeyBoardListener<>(this);
     }
 
     /**

@@ -97,10 +97,14 @@ public class MainUI extends JFrame {
         buttonPane.setPreferredSize(new Dimension(220, getHeight()));
         buttonPane.setLayout(new BorderLayout());
 
-        newGame = new RectangleButtonForMain("New Game", null);
-        pause = new RectangleButtonForMain("Pause", null);
-        setting = new RectangleButtonForMain("Setting", null);
-        save = new RectangleButtonForMain("Save", null);
+        try {
+            newGame = new RectangleButtonForMain("New Game", null);
+            pause = new RectangleButtonForMain("Pause", null);
+            setting = new RectangleButtonForMain("Setting", null);
+            save = new RectangleButtonForMain("Save", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         pause.setEnabled(false);
         save.setEnabled(false);
         JPanel newGamePauseMode = new JPanel();
@@ -119,13 +123,18 @@ public class MainUI extends JFrame {
         ImageIcon leftArrow = new ImageIcon(App.iconsLocation + "leftArrow.png");
         ImageIcon downArrow = new ImageIcon(App.iconsLocation + "downArrow.png");
         ImageIcon rightArrow = new ImageIcon(App.iconsLocation + "rightArrow.png");
-        up = new RectangleButtonForMain(null, upArrow);
+        try {
+            up = new RectangleButtonForMain(null, upArrow);
+            left = new RectangleButtonForMain(null, leftArrow);
+            down = new RectangleButtonForMain(null, downArrow);
+            right = new RectangleButtonForMain(null, rightArrow);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         JPanel upPane = new JPanel();
         upPane.setOpaque(false);
         upPane.add(up);
-        left = new RectangleButtonForMain(null, leftArrow);
-        down = new RectangleButtonForMain(null, downArrow);
-        right = new RectangleButtonForMain(null, rightArrow);
+
         JPanel leftDownRightPane = new JPanel();
         leftDownRightPane.setOpaque(false);
         leftDownRightPane.add(left);

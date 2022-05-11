@@ -30,13 +30,13 @@ public class App {
             new Color(154, 250, 239), new Color(203, 190, 216)};
     public static String photosLocation = "src" + File.separator + "image" + File.separator + "photos" + File.separator;
     public static String iconsLocation = "src" + File.separator + "image" + File.separator;
+    public static String userDataPath = "src" + File.separator + "userdata" + File.separator + "Data.dat";
     public static User currentUser = null;
-    public final static int defaultGameSize = 4;// Purpose of this parameter is to decide the blockArray's size
+    public final static int defaultGameSize = 4;// Purpose of this parameter is to decide the game size
     public final static int minGameSize = 3;
     public final static int maxGameSize = 5;
-    public final static int WinNum = 16;// You will win the game, if there is any number larger than WinNum
+    public final static int WinNum = 16;// You will win the game, if there is any number larger than the WinNum
     public static Map<String, User> usersData = null;
-    public static String userDataPath = "src" + File.separator + "userdata" + File.separator + "Data.dat";
     public static MainUI mainUI = null;
     public static LoginUI loginUI = null;
     public static ProfileUI profileUI = null;

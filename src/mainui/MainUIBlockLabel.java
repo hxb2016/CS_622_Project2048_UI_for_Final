@@ -38,8 +38,7 @@ public class MainUIBlockLabel extends JLabel {
         setForeground(numberColor1);
         setFont(new Font("Times New Roman", Font.BOLD, textSize));
 
-        KeyBoardListener<MainUIBlockLabel> keyBoardListener = new KeyBoardListener<>(this);
-        keyBoardListener.setListener();
+        new KeyBoardListener<>(this);
     }
 
     public void paint(Graphics g) {

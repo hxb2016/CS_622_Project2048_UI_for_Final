@@ -4,6 +4,7 @@ import tool.MouseListenerForChangeColor;
 import tool.TextButton;
 
 import java.awt.*;
+
 /**
  * Purpose of this class is to create a Button object for profileUI
  * Author: Xiaobing Hou
@@ -13,9 +14,8 @@ import java.awt.*;
 public class TextButtonForProfile extends TextButton {
     public TextButtonForProfile(String text) {
         super(text);
-        this.setFont(new Font("Times New Roman", Font.BOLD, 18));
+        setFont(new Font("Times New Roman", Font.BOLD, 18));
 
-        MouseListenerForChangeColor<TextButtonForProfile> mouseListener = new MouseListenerForChangeColor<>(this);
-        mouseListener.setListener(Color.GRAY, Color.BLACK);
+        new MouseListenerForChangeColor<>(this, Color.BLACK);
     }
 }

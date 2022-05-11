@@ -13,7 +13,7 @@ import java.awt.*;
  * Course: CS-622
  */
 public class RectangleButtonForLogin extends RectangleButton {
-    public RectangleButtonForLogin(String text, ImageIcon icon) {
+    public RectangleButtonForLogin(String text, ImageIcon icon) throws Exception {
         super(text, icon);
         if (text != null) {
             setFont(new Font("Times New Roman", Font.BOLD, 18));

@@ -197,20 +197,17 @@ public class SettingController {
         }};
 
 
-        NewCompListSortByLocation<List<JPanel>> newCompListSortByLocation = (oldJPanelList, currentUser) -> {
-            List<JPanel> newJPanelList = new ArrayList<>(oldJPanelList);
-            for (int i = 0; i < currentUser.photoRecordLayout.length; i++) {
-                switch (currentUser.photoRecordLayout[i]) {
-                    case "left" -> newJPanelList.set(0, oldJPanelList.get(i));
-                    case "center" -> newJPanelList.set(1, oldJPanelList.get(i));
-                    case "right" -> newJPanelList.set(2, oldJPanelList.get(i));
-                }
+        List<JPanel> newJPanelList = new ArrayList<>(jPanelList);
+        for (int i = 0; i < user.photoRecordLayout.length; i++) {
+            switch (user.photoRecordLayout[i]) {
+                case "left" -> newJPanelList.set(0, jPanelList.get(i));
+                case "center" -> newJPanelList.set(1, jPanelList.get(i));
+                case "right" -> newJPanelList.set(2, jPanelList.get(i));
             }
-            return newJPanelList;
-        };
+        }
 
         // lambda for loop
-        newCompListSortByLocation.getNewComponentList(jPanelList, user).forEach(p -> mainUI.recordPane.add(p));
+        newJPanelList.forEach(p -> mainUI.recordPane.add(p));
 
         mainUI.recordPane.updateUI();
     }

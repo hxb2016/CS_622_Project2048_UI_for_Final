@@ -89,11 +89,14 @@ public class LoginUI extends JDialog {
         signInAndUp.setLayout(new GridLayout(1, 2));
         signInAndUp.setSize(getWidth(), 50);
 
-        signIn = new RectangleButtonForLogin("Sign in",null);// sign in button
+        try {
+            signIn = new RectangleButtonForLogin("Sign in",null);// sign in button
+            signUp = new RectangleButtonForLogin("Sign up",null);// sign up button
+            cancelSignUp = new RectangleButtonForLogin("Cancel",null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         signInAndUp.add(signIn, BorderLayout.CENTER);
-
-        signUp = new RectangleButtonForLogin("Sign up",null);// sign up button
-        cancelSignUp = new RectangleButtonForLogin("Cancel",null);
 
         add(signInAndUp, BorderLayout.SOUTH);
         add(informationArea, BorderLayout.CENTER);

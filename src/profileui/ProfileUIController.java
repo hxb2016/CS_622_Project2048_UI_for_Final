@@ -144,7 +144,6 @@ public class ProfileUIController {
                         }
 
                     });
-
                     InitGame initGame = new InitGame();
                     handleData.start();
                     initGame.start();

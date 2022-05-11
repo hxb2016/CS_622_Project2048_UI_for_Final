@@ -21,9 +21,11 @@ public class KeyBoardListener<Comp extends Component> {
 
     public KeyBoardListener(Comp comp) {
         this.comp = comp;
+
+        setListener();
     }
 
-    public void setListener() {
+    private void setListener() {
         comp.addKeyListener(new KeyAdapter() {
 
             @Override

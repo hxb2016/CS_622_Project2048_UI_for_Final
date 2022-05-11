@@ -2,8 +2,6 @@ package tool;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 /**
  * purpose of this abstract class is to create button have basic style for the game
  *

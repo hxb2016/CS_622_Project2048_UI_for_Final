@@ -17,7 +17,6 @@ public class TextButtonForLoginUI extends TextButton {
         super(text);
         setFont(new Font("Times New Roman", Font.PLAIN, 12));
 
-        MouseListenerForChangeColor<TextButtonForLoginUI> mouseListener = new MouseListenerForChangeColor<>(this);
-        mouseListener.setListener(Color.GRAY, new Color(18, 150, 219));
+        new MouseListenerForChangeColor<>(this, new Color(18, 150, 219));
     }
 }
